@@ -31,7 +31,7 @@ theme_set(theme_classic())
 ## Read in data
 ```{r}
 
-df.exp1 = read.csv("../../data/exp1.csv")
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
 ```
 
 ## Wrangle
@@ -160,7 +160,7 @@ fit.brm.basic_level.kind
 
 ```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
 
-df.exp1 = read.csv("../../data/exp1.csv")
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
 
 df.plot = df.exp1 %>%
   filter(include == 1) %>% 
@@ -229,7 +229,7 @@ ggsave("../../figures/exp1/exp1_condition_bar.pdf",
 
 ```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
 
-df.exp1 = read.csv("../../data/exp1.csv")
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
 
 df.plot = df.exp1 %>%
   filter(include == 1) %>% 
@@ -336,7 +336,7 @@ plot_basic
 ## Read in data
 ```{r message=FALSE, warning=FALSE}
 
-df.exp2 = read.csv("../../data/exp2.csv")
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
 ```
 
 ## Wrangle
@@ -392,7 +392,7 @@ df.exp2 = df.exp2 %>%
   
   
   # language spoken
-read.csv("../../data/exp2.csv") %>%
+read.csv("../../data/exp2/exp2.csv") %>%
   clean_names() %>%
   mutate(native_english = ifelse(native_english == "-", NA,          as.numeric(native_english))) %>%
   summarize(sum(native_english, na.rm = TRUE))
@@ -468,7 +468,7 @@ fit.brm.superordinate_level.kind
 
 ```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
 
-df.exp2 = read.csv("../../data/exp2.csv")
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
 
 df.plot = df.exp2 %>%
   filter(completed_all_trials == 1) %>% 
@@ -540,7 +540,7 @@ ggsave("../../figures/exp2/exp2_condition_bar.pdf",
 
 ```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
 
-df.exp2 = read.csv("../../data/exp2.csv")
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
 
 df.plot = df.exp2 %>%
   filter(completed_all_trials == 1) %>% 
@@ -650,7 +650,7 @@ plot_super
 
 ```{r message=FALSE, warning=FALSE}
 
-df.exp3a = read_csv("../../data/exp3_part1.csv")
+df.exp3a = read_csv("../../data/exp3/exp3_part1.csv")
 
 ```
 
@@ -670,11 +670,11 @@ df.exp3a = df.exp3a %>%
 
 ```{r}
 
-read_csv("../../data/exp3_part1.csv")%>% 
+read_csv("../../data/exp3/exp3_part1.csv")%>% 
   group_by(gender) %>% 
   count()
 
-read_csv("../../data/exp3_part1.csv") %>% 
+read_csv("../../data/exp3/exp3_part1.csv") %>% 
   group_by(native_english) %>% 
   count()
 
@@ -811,7 +811,7 @@ plot_word
 
 ```{r message=FALSE, warning=FALSE}
 
-df.exp3b = read_csv("../../data/exp3_part2.csv")
+df.exp3b = read_csv("../../data/exp3/exp3_part2.csv")
 
 ```
 
@@ -834,7 +834,7 @@ df.exp3b = df.exp3b %>%
 ```{r message=FALSE, warning=FALSE}
 
   # gender
-read_csv("../../data/exp3_part2.csv") %>% 
+read_csv("../../data/exp3/exp3_part2.csv") %>% 
   filter(participant %in% (1:40)) %>%
   group_by(gender) %>%
   summarise(n = n_distinct(participant)) %>%
@@ -842,7 +842,7 @@ read_csv("../../data/exp3_part2.csv") %>%
 
   
   # language spoken
-read_csv("../../data/exp3_part2.csv") %>% 
+read_csv("../../data/exp3/exp3_part2.csv") %>% 
   filter(participant %in% (1:40)) %>%
   mutate(en_occurrence = ifelse(str_detect(language, "en"), "en", "non-en")) %>%
   group_by(en_occurrence) %>%
@@ -965,7 +965,7 @@ plot_correct
 
 ```{r message=FALSE, warning=FALSE}
 
-df.exp4 = read_csv("../../data/exp4.csv")
+df.exp4 = read_csv("../../data/exp4/exp4.csv")
 
 ```
 
@@ -992,14 +992,14 @@ df.exp4 = df.exp4 %>%
 
 
   # gender
-read_csv("../../data/exp4.csv") %>%
+read_csv("../../data/exp4/exp4.csv") %>%
   group_by(gender) %>%
   summarise(n = n_distinct(participant_number)) %>%
   print()
 
   
   # language spoken
-read_csv("../../data/exp4.csv") %>%
+read_csv("../../data/exp4/exp4.csv") %>%
   mutate(en_occurrence = ifelse(str_detect(lan_spoken, "en"), "en", "non-en")) %>%
   group_by(en_occurrence) %>%
   summarise(n = n_distinct(participant_number)) %>%
