@@ -2,18 +2,18 @@
 
 Here you will find anonymized data from all experiments.
 
-## Exp1
+## Experiment 1
  
 Contains `exp1.csv` which includes trial and demographic data. 
 
-## Exp2
+## Experiment 2
 
  Contains `exp2.csv` which includes the trial and demographic data
  
- ## Exp3
+ ## Experiment 3
  
  Contains `exp3_part1.csv` and `exp3_part2.csv' both of which include trial and demographic data.
  
- ## Exp4
+ ## Experiment 4
  
 Contains `exp4.csv` which includes trial and demographic data. 
