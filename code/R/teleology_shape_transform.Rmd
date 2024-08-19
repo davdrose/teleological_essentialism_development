@@ -643,7 +643,7 @@ ggsave(plot_super, filename = "../../figures/exp2/exp2_condition_kind_combined_b
 plot_super
 
 ```
-#EXPERIMENT 3
+#EXPERIMENT 3 (Norming)
 #PART 1 (What is this for?)
 #DATA
 ## Read in data
@@ -959,7 +959,7 @@ plot_correct
 
 ```
 
-# EXPERIMENT 4 (Transformation)
+# EXPERIMENT 3 (Transformation)
 
 ## Read in data
 
@@ -1109,22 +1109,76 @@ fit.brm.control
 # df.data = expand_grid(age = seq(4, 9, 0.1),
 #                       kind = c("artifacts", "biological kinds"))
 # 
-# df.prediction = fit.brm.purpose %>% 
+# df.prediction = fit.brm.purpose %>%
 #   fitted(newdata = df.data,
 #          re_formula = NA,
-#           probs = c(0.1, 0.9)) %>% 
-#   as_tibble() %>% 
-#   bind_cols(df.data) %>% 
-#   mutate(type = "purpose") %>% 
-#   bind_rows(fit.brm.control %>% 
+#           probs = c(0.1, 0.9)) %>%
+#   as_tibble() %>%
+#   bind_cols(df.data) %>%
+#   mutate(type = "purpose") %>%
+#   bind_rows(fit.brm.control %>%
 #               fitted(newdata = df.data,
 #                      re_formula = NA,
-#                      probs = c(0.1, 0.9)) %>% 
-#               as_tibble() %>% 
-#               bind_cols(df.data) %>% 
-#               mutate(type = "control")) %>% 
+#                      probs = c(0.1, 0.9)) %>%
+#               as_tibble() %>%
+#               bind_cols(df.data) %>%
+#               mutate(type = "control")) %>%
 #   clean_names()
-
+# 
+# df.means = df.exp4 %>% 
+#   dplyr::group_by(age_whole, kind, condition) %>% 
+#   dplyr::summarize(
+#     response = Hmisc::smean.cl.boot(response)) %>% 
+#    mutate(index = c("response", "low", "high")) %>%
+#     ungroup() %>% 
+#     pivot_wider(names_from = index,
+#                 values_from = response) %>% 
+#   mutate(age_whole = as.numeric(as.character(age_whole)),
+#          age_whole = age_whole + 0.5) %>% 
+#   filter(age_whole != 0.5)
+# 
+# 
+# ggplot(mapping = aes(x = age, 
+#                      y = response,
+#                      color = kind)) + 
+#   geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
+#   geom_smooth(data = df.prediction,
+#               mapping = aes(y = estimate,
+#                             ymin = q10,
+#                             ymax = q90,
+#                             color = question,
+#                             fill = question),
+#               stat = "identity",
+#               alpha = 0.2) +
+#   geom_pointrange(data = df.means,
+#                   mapping = aes(x = age_whole,
+#                                 y = response,
+#                                 ymin = low,
+#                                 ymax = high,
+#                                 fill = question,
+#                                 shape = question),
+#                   color = "black",
+#                   size = 0.5,
+#                   show.legend = FALSE,
+#                   alpha = 0.8,
+#                   position = position_dodge(width = 0.5)) +
+#  scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+#   scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) 
+#   scale_shape_manual(values = c(21, 23)) +
+#   scale_y_continuous(breaks = seq(0, 1, 0.25),
+#                       labels = str_c(seq(0, 1, 0.25) * 100, "%")) +
+#   scale_x_continuous(breaks = 5:10,
+#                      labels = c("5", "6", "7", "8", "9", "10")) +
+#     labs(y = "Probability of selecting \n original thing") +  theme(axis.title.y = element_text(size=12),
+#           legend.title = element_blank(),
+#           legend.position = "bottom",
+#           plot.title = element_text(hjust = 0.5, 
+#                                     face="bold", 
+#                                     size=20, 
+#                                     margin = margin(t = 20, b = 20))) +
+#     ggtitle("Artifacts vs. Biological Kinds \n in Control and Purpose Conditions") +
+#   facet_wrap(~condition)
+  
 ```
 
 ### GLM + Means
@@ -1190,7 +1244,7 @@ ggplot(data = df.exp4,
   labs(y = "Probability of selecting \n original thing") +
    scale_x_continuous(limits=c(4.9, 10),
                      breaks = 5:10) +
-  scale_y_continuous(limits = c(0, 1),  # Set limits of y-axis
+  scale_y_continuous(limits = c(0, 1),  
                      breaks = seq(0, 1, 0.25),
                      labels = str_c(seq(0, 1, 0.25) * 100, "%")) + 
     theme(axis.title.y = element_text(size=12),
