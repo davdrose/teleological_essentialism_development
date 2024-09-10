@@ -1222,52 +1222,51 @@ fit.brm.control.plot = brm(formula = response ~ 1 + kind*age + (1 | participant_
 
 df.data = df.exp4 %>% 
   group_by(age_whole, kind, condition) %>%
+  mutate(age = mean(age)) %>%
+  group_by(age, kind, condition) %>%
   reframe(value = Hmisc::smean.cl.boot(response),
           name = c("response", "low", "high")) %>%
-  pivot_wider() %>% 
-  group_by(condition) %>% 
-  mutate(age = as.numeric(as.character(age_whole)),
-         index = 1:10) %>% 
-  ungroup() %>% 
-  select(-age_whole)
+  pivot_wider()
 
-df.plot = df.data %>% 
-  left_join(
-    bind_rows(
-      fit.brm.purpose.plot %>%
-        fitted(newdata = df.data %>% 
-                 filter(condition == "purpose"),
-               re_formula = NA,
-               probs = c(0.025, 0.975)) %>% 
-        as_tibble() %>% 
-        mutate(condition = "purpose",
-               index = 1:10),
-      fit.brm.control.plot %>%
-        fitted(newdata = df.data %>% 
-                 filter(condition == "control"),
-               re_formula = NA,
-               probs = c(0.025, 0.975)) %>% 
-        as_tibble() %>% 
-        mutate(condition = "control",
-               index = 1:10)
-    ),
-    by = c("condition", "index")) %>% 
+df.range = expand_grid(age = seq(5, 10, 0.1),
+                      kind = c("artifacts", "biological kinds"),
+                      condition = c("purpose", "control"))
+
+df.plot.purpose = fit.brm.purpose.plot %>%
+  fitted(newdata = df.range %>% 
+           filter(condition == "purpose"),
+         re_formula = NA,
+         probs = c(0.025, 0.975)) %>% 
+  as_tibble() %>% 
+  bind_cols(df.range %>% 
+              filter(condition == "purpose"))
+
+df.plot.control = fit.brm.control.plot %>%
+  fitted(newdata = df.range %>% 
+           filter(condition == "control"),
+         re_formula = NA,
+         probs = c(0.025, 0.975)) %>% 
+  as_tibble() %>% 
+  bind_cols(df.range %>% 
+              filter(condition == "control"))
+
+df.plot = bind_rows(df.plot.purpose, df.plot.control) %>%
   clean_names()
 
-ggplot(data = df.plot,
-       mapping = aes(x = age,
-                     y = response,
-                     color = kind, 
-                     shape = kind)) +
+ggplot() +
   geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
-  geom_smooth(mapping = aes(y = estimate,
+  geom_smooth(data = df.plot,
+              mapping = aes(y = estimate,
+                            x = age,
                             ymin = q2_5,
                             ymax = q97_5,
                             color = kind,
                             fill = kind),
               stat = "identity",
               alpha = 0.2) +
-  geom_pointrange(mapping = aes(y = response,
+  geom_pointrange(data = df.data,
+                  mapping = aes(y = response,
+                                x = age,
                                 ymin = low,
                                 ymax = high,
                                 fill = kind,
