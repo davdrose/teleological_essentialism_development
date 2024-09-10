@@ -2,7 +2,12 @@
 title: "Teleology, Shape Bias and Transformations"
 author: "David Rose, Jadess Lowery, Siying Zhang and Ellen Markman"
 date: "`r format(Sys.Date(), '%B %d, %Y')`"
-output: html_document
+output:
+  bookdown::html_document2:
+    toc: true
+    toc_depth: 6
+    theme: cosmo
+    highlight: tango
 ---
 
 # Load packages 
@@ -19,10 +24,17 @@ library("tidyverse")      # for everything else
 
 ```
 
-# Set theme
+# Settings
 ```{r}
 
+# set theme
 theme_set(theme_classic())
+
+# suppress warnings about grouping 
+options(dplyr.summarise.inform = F)
+
+# suppress warnings and messages 
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
 
 ```
 
@@ -114,7 +126,6 @@ fit.brm.basic_level = brm(formula = rating ~ 1 + condition + (1 | participant_nu
                      seed = 1,
                      iter = 8000,
                      warmup = 1000,
-                     cores = 8,
                      control = list(adapt_delta = .999999,
                                     max_treedepth = 15),
                      file = "cache/fit.brm.basic_level") 
@@ -124,7 +135,7 @@ fit.brm.basic_level
 
 
 ```
-## Hypotheis test of condition differneces and differnece from chance
+## Hypothesis test of condition differneces and differnece from chance
 
 ```{r}
 
@@ -145,7 +156,6 @@ fit.brm.basic_level.kind = brm(formula = rating ~ 1 + kind + (1 | participant_nu
                      seed = 1,
                      iter = 8000,
                      warmup = 1000,
-                     cores = 8,
                      control = list(adapt_delta = .999999,
                                     max_treedepth = 15),
                      file = "cache/fit.brm.basic_leve.kindl") 
@@ -213,7 +223,7 @@ p1 = ggplot(data = df.plot,
           legend.text = element_text(size = 14),
           legend.position = "bottom",
           axis.text.x = element_blank(),
-          plot.title = element_text(hjust = 0.5, face="bold", size=26, margin = margin(t = 20, b = 20))) +
+          plot.title = element_text(hjust = 0.5, face="bold", size=16, margin = margin(t = 20, b = 20))) +
     ggtitle("Overall")
 
 p1
@@ -423,7 +433,6 @@ fit.brm.superordinate_level = brm(formula = rating ~ 1 + condition + (1 | partic
                      seed = 1,
                      iter = 8000,
                      warmup = 1000,
-                     cores = 8,
                      control = list(adapt_delta = .999999,
                                     max_treedepth = 15),
                      file = "cache/fit.brm.superordinate_level") 
@@ -433,7 +442,7 @@ fit.brm.superordinate_level
 
 
 ```
-## Hypotheis test of condition differneces and differnece from chance
+## Hypothesis test of condition differneces and differnece from chance
 
 ```{r}
 
@@ -452,7 +461,6 @@ fit.brm.superordinate_level.kind = brm(formula = rating ~ 1 + kind + (1 | partic
                      seed = 1,
                      iter = 8000,
                      warmup = 1000,
-                     cores = 8,
                      control = list(adapt_delta = .999999,
                                     max_treedepth = 15),
                      file = "cache/fit.brm.superordinate_level.kind") 
@@ -724,7 +732,7 @@ ggsave(width = 20, height = 20, "../../figures/exp3/part1/exp3a_topwords_by_item
 ```
 
 ### One gram probability of selected items 
-```{r}
+```{r message=FALSE, warning=FALSE}
 
 # 1 grams
 df.1gram_selected = df.exp3a %>% 
@@ -806,7 +814,7 @@ plot_word
 
 ```
 
-# PART 2 (What one X or Y, is for this?)
+# PART 2 (What one is for this?)
 ## Read in data
 
 ```{r message=FALSE, warning=FALSE}
@@ -1026,7 +1034,6 @@ fit.brm.artifacts = brm(formula = response ~ 1 + condition*age + (1 | participan
                      warmup = 1000,
                      control = list(adapt_delta = .9999,
                                     max_treedepth = 15),
-                     cores = 8,
                      file = "cache/fit.brm.artifacts")
 
 fit.brm.artifacts
@@ -1046,9 +1053,8 @@ fit.brm.biological = brm(formula = response ~ 1 + condition*age + (1 | participa
                      seed = 1,
                      iter = 4000,
                      warmup = 1000,
-                    control = list(adapt_delta = .9999,
+                     control = list(adapt_delta = .9999,
                                     max_treedepth = 15),
-                     cores = 8,
                      file = "cache/fit.brm.biological")
 
 fit.brm.biological
@@ -1069,9 +1075,8 @@ fit.brm.purpose = brm(formula = response ~ 1 + kind*age + (1 | participant_numbe
                      seed = 1,
                      iter = 4000,
                      warmup = 1000,
-                    control = list(adapt_delta = .9999,
+                     control = list(adapt_delta = .9999,
                                     max_treedepth = 15),
-                     cores = 8,
                      file = "cache/fit.brm.purpose")
 
 fit.brm.purpose
@@ -1091,9 +1096,8 @@ fit.brm.control = brm(formula = response ~ 1 + kind*age + (1 | participant_numbe
                      seed = 1,
                      iter = 4000,
                      warmup = 1000,
-                    control = list(adapt_delta = .9999,
+                     control = list(adapt_delta = .9999,
                                     max_treedepth = 15),
-                     cores = 8,
                      file = "cache/fit.brm.control")
 
 fit.brm.control
@@ -1106,79 +1110,97 @@ fit.brm.control
 
 ```{r}
 
-# df.data = expand_grid(age = seq(4, 9, 0.1),
-#                       kind = c("artifacts", "biological kinds"))
-# 
-# df.prediction = fit.brm.purpose %>%
-#   fitted(newdata = df.data,
-#          re_formula = NA,
-#           probs = c(0.1, 0.9)) %>%
-#   as_tibble() %>%
-#   bind_cols(df.data) %>%
-#   mutate(type = "purpose") %>%
-#   bind_rows(fit.brm.control %>%
-#               fitted(newdata = df.data,
-#                      re_formula = NA,
-#                      probs = c(0.1, 0.9)) %>%
-#               as_tibble() %>%
-#               bind_cols(df.data) %>%
-#               mutate(type = "control")) %>%
-#   clean_names()
-# 
-# df.means = df.exp4 %>% 
-#   dplyr::group_by(age_whole, kind, condition) %>% 
-#   dplyr::summarize(
-#     response = Hmisc::smean.cl.boot(response)) %>% 
-#    mutate(index = c("response", "low", "high")) %>%
-#     ungroup() %>% 
-#     pivot_wider(names_from = index,
-#                 values_from = response) %>% 
-#   mutate(age_whole = as.numeric(as.character(age_whole)),
-#          age_whole = age_whole + 0.5) %>% 
-#   filter(age_whole != 0.5)
-# 
-# 
-# ggplot(mapping = aes(x = age, 
-#                      y = response,
-#                      color = kind)) + 
-#   geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
-#   geom_smooth(data = df.prediction,
-#               mapping = aes(y = estimate,
-#                             ymin = q10,
-#                             ymax = q90,
-#                             color = question,
-#                             fill = question),
-#               stat = "identity",
-#               alpha = 0.2) +
-#   geom_pointrange(data = df.means,
-#                   mapping = aes(x = age_whole,
-#                                 y = response,
-#                                 ymin = low,
-#                                 ymax = high,
-#                                 fill = question,
-#                                 shape = question),
-#                   color = "black",
-#                   size = 0.5,
-#                   show.legend = FALSE,
-#                   alpha = 0.8,
-#                   position = position_dodge(width = 0.5)) +
-#  scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
-#   scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) 
-#   scale_shape_manual(values = c(21, 23)) +
-#   scale_y_continuous(breaks = seq(0, 1, 0.25),
-#                       labels = str_c(seq(0, 1, 0.25) * 100, "%")) +
-#   scale_x_continuous(breaks = 5:10,
-#                      labels = c("5", "6", "7", "8", "9", "10")) +
-#     labs(y = "Probability of selecting \n original thing") +  theme(axis.title.y = element_text(size=12),
-#           legend.title = element_blank(),
-#           legend.position = "bottom",
-#           plot.title = element_text(hjust = 0.5, 
-#                                     face="bold", 
-#                                     size=20, 
-#                                     margin = margin(t = 20, b = 20))) +
-#     ggtitle("Artifacts vs. Biological Kinds \n in Control and Purpose Conditions") +
-#   facet_wrap(~condition)
-  
+fit.brm.purpose.plot = brm(formula = response ~ 1 + kind*age + (1 | participant_number), 
+                     data = df.purpose,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     file = "cache/fit.brm.purpose.plot")
+
+fit.brm.control.plot = brm(formula = response ~ 1 + kind*age + (1 | participant_number),
+                     data = df.control,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     file = "cache/fit.brm.control.plot")
+
+df.data = expand_grid(age = seq(5, 10, 0.1),
+                      kind = c("artifacts", "biological kinds"))
+
+df.prediction = fit.brm.purpose.plot %>%
+  fitted(newdata = df.data,
+         re_formula = NA,
+          probs = c(0.025, 0.975)) %>%
+  as_tibble() %>%
+  bind_cols(df.data) %>%
+  mutate(type = "purpose") %>%
+  bind_rows(fit.brm.control.plot %>%
+              fitted(newdata = df.data,
+                     re_formula = NA,
+                     probs = c(0.25, 0.975)) %>%
+              as_tibble() %>%
+              bind_cols(df.data) %>%
+              mutate(type = "control")) %>%
+  clean_names()
+
+df.means = df.exp4 %>%
+  dplyr::group_by(age_whole, kind, condition) %>%
+  dplyr::summarize(
+    response = Hmisc::smean.cl.boot(response)) %>%
+   mutate(index = c("response", "low", "high")) %>%
+    ungroup() %>%
+    pivot_wider(names_from = index,
+                values_from = response) %>%
+  mutate(age_whole = as.numeric(as.character(age_whole)),
+         age_whole = age_whole + 0.5) %>%
+  filter(age_whole != 0.5)
+
+
+ggplot(mapping = aes(x = age,
+                     y = response,
+                     color = kind, 
+                     shape = kind)) +
+  geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
+  geom_smooth(data = df.prediction,
+              mapping = aes(y = estimate,
+                            ymin = q2_5,
+                            ymax = q97_5,
+                            color = kind,
+                            fill = kind),
+              stat = "identity",
+              alpha = 0.2) +
+  geom_pointrange(data = df.means,
+                  mapping = aes(x = age_whole,
+                                y = response,
+                                ymin = low,
+                                ymax = high,
+                                fill = kind,
+                                shape = kind),
+                  color = "black",
+                  size = 0.5,
+                  show.legend = FALSE,
+                  alpha = 0.8,
+                  position = position_dodge(width = 0.5)) +
+ scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_shape_manual(values = c(21, 23)) +
+  scale_y_continuous(breaks = seq(0, 1, 0.25),
+                      labels = str_c(seq(0, 1, 0.25) * 100, "%")) +
+  scale_x_continuous(breaks = 5:10,
+                     labels = c("5", "6", "7", "8", "9", "10")) +
+  labs(y = "Probability of selecting \n original thing") +  
+  theme(axis.title.y = element_text(size=12),
+          legend.title = element_blank(),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5,
+                                    face="bold",
+                                    size=20,
+                                    margin = margin(t = 20, b = 20))) +
+    ggtitle("Artifacts vs. Biological Kinds \n in Control and Purpose Conditions") +
+  facet_wrap(~condition)
+
 ```
 
 ### GLM + Means
