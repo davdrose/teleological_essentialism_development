@@ -1,4 +1,4 @@
-# Teleology, shape and transformations
+# Teleological essentialism in development
 
 This repository contains the experiments, data, analyses, and figures for the paper "Teleology, shape and transformations," by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman.
 
