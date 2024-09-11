@@ -1197,7 +1197,7 @@ ggplot() +
   scale_x_continuous(breaks = 5:10,
                      labels = c("5", "6", "7", "8", "9", "10")) +
   labs(y = "Probability of selecting \n original thing") +  
-  ggtitle("Artifacts vs. Biological Kinds \n in Control and Purpose Conditions") +
+  ggtitle("Artifacts vs. Biological Kinds \n in Standard and Purpose Versions") +
   theme(legend.position = "bottom",
         legend.title = element_blank(),
         text = element_text(size = 18),
