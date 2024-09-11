@@ -1,0 +1,1232 @@
+---
+title: "Teleology, Shape Bias and Transformations"
+author: "David Rose, Jadess Lowery, Siying Zhang and Ellen Markman"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  bookdown::html_document2:
+    toc: true
+    toc_depth: 6
+    theme: cosmo
+    highlight: tango
+---
+
+# Load packages 
+
+```{r, message=F, warning=FALSE}
+
+library("tidytext")       # for text data
+library("emmeans")        # for comparing models
+library("knitr")          # for knitting  
+library("brms")           # for Bayesian data analysis
+library("janitor")        # for cleaning variable names
+library("patchwork")      # for combining plots
+library("tidyverse")      # for everything else 
+
+```
+
+# Settings
+```{r}
+
+# set theme
+theme_set(theme_classic())
+
+# suppress warnings about grouping 
+options(dplyr.summarise.inform = F)
+
+# suppress warnings and messages 
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+
+```
+
+# EXPERIMENT 1 (Basic-level)
+# DATA
+## Read in data
+```{r}
+
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
+```
+
+## Wrangle
+
+```{r}
+
+
+df.exp1 = df.exp1 %>%
+  filter(include == 1) %>% 
+  pivot_longer(cols = (bag: snail),
+               names_to = "item",
+               values_to = "rating",
+               values_drop_na = TRUE) %>%
+  relocate(participant_number, condition, item, rating, age, gender, lan_spoken) %>%
+  mutate(kind = case_when(item == "bag" ~ 0,
+                          item == "shoe" ~ 0,
+                          item == "clock" ~ 0,
+                          item == "phone" ~ 0,
+                          item == "drum" ~ 0,
+                          item == "spider" ~ 1,
+                          item == "tree" ~ 1,
+                          item == "snail" ~ 1)) %>%
+  mutate(kind = factor(kind,
+                       levels = c("0", "1"),
+                       labels = c("artifact", "biological")))
+
+# warm-up items
+df.exp1.warmup = df.exp1 %>% 
+  filter(item %in% c("bag", "shoe"))
+
+#test items
+df.exp1 = df.exp1 %>% 
+  filter(!item %in% c("bag", "shoe"))
+
+
+
+
+```
+
+## Demographics
+
+```{r}
+
+
+  # gender
+  df.exp1 %>%
+    group_by(gender) %>%
+    summarise(n = n_distinct(participant_number)) %>%
+    print()
+  
+  
+  # language spoken
+df.exp1 %>%
+    mutate(en_occurrence = ifelse(str_detect(lan_spoken, "en"), "en", "non-en")) %>%
+    group_by(en_occurrence) %>%
+    summarise(n = n_distinct(participant_number)) %>%
+    print()
+
+
+
+```
+# STATS
+## Bayesian Regression
+
+```{r}
+
+# sum coding
+options(contrasts = c("contr.sum","contr.poly"))
+
+df.model = df.exp1 %>% 
+  mutate(condition = as_factor(condition),
+         condition= fct_relevel(condition, "purpose"))
+
+# Check contrast values
+ contrasts(df.model$condition)
+
+fit.brm.basic_level = brm(formula = rating ~ 1 + condition + (1 | participant_number) + (1 | item), 
+                     data = df.model,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 8000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .999999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.basic_level") 
+
+fit.brm.basic_level
+
+
+
+```
+## Hypothesis test of condition differneces and differnece from chance
+
+```{r}
+
+fit.brm.basic_level %>%
+  emmeans(pairwise ~ condition)
+
+
+
+```
+
+## Test of kind
+
+```{r}
+
+fit.brm.basic_level.kind = brm(formula = rating ~ 1 + kind + (1 | participant_number) + (1 | item), 
+                     data = df.model,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 8000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .999999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.basic_leve.kindl") 
+
+fit.brm.basic_level.kind
+
+```
+
+#PLOT
+
+## Condition
+
+```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
+
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
+
+df.plot = df.exp1 %>%
+  filter(include == 1) %>% 
+  select(-bag, -shoe) %>%
+  mutate(across(.cols = clock : snail, .fns = as.numeric)) %>%
+  mutate(total = clock + drum + phone + tree + spider + snail,
+         percent = (total / 6) * 100) %>% 
+  mutate(condition = str_replace_all(condition, "_", " ")) %>% 
+  mutate(condition = factor(condition, levels = c("label only", "irrelevant", "purpose"))) %>% 
+  select(participant_number, condition, percent) 
+
+p1 = ggplot(data = df.plot,
+         mapping = aes(x = condition,
+                       y = percent,
+                       group = condition,
+                       color = condition,
+                       fill = condition)) + 
+    stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.5), 
+                 alpha = .9,
+                 color = "black",
+                 size = 1) +
+     geom_hline(yintercept = 50, linetype="dashed", 
+               color = "black", size=.5) +
+     geom_point(aes(color = condition,
+                   fill = condition),
+               position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               shape = 21,
+               size = 2,
+               color = "grey30",
+               alpha = .4) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.5),
+                 color = "black",
+                 size = 1.2) +
+ scale_fill_manual(values = c("label only" = "#377EB8", "irrelevant" = "#E41A1C", "purpose" = "#4DAF4A"), breaks=c("label only", "irrelevant", "purpose")) +
+  scale_color_manual(values = c("label only" = "#377EB8", "irrelevant" = "#E41A1C", "purpose" = "#4DAF4A"), breaks=c("label only", "irrelevant", "purpose")) +
+   scale_y_continuous(breaks = seq(0, 100, 25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 100)) +
+    labs(y = "Probability of selecting \n\ taxonomic match") +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_text(size=18),
+          axis.text.y = element_text(size = 14),
+          legend.title = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.position = "bottom",
+          axis.text.x = element_blank(),
+          plot.title = element_text(hjust = 0.5, face="bold", size=16, margin = margin(t = 20, b = 20))) +
+    ggtitle("Overall")
+
+p1
+
+  
+ggsave("../../figures/exp1/exp1_condition_bar.pdf",
+       height = 5, 
+       width = 8)
+
+```
+
+## Kind by condition
+
+```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
+
+df.exp1 = read.csv("../../data/exp1/exp1.csv")
+
+df.plot = df.exp1 %>%
+  filter(include == 1) %>% 
+  select(-bag, -shoe) %>%
+  pivot_longer(cols = (clock: snail),
+               names_to = "item",
+               values_to = "rating",
+               values_drop_na = TRUE) %>%
+  relocate(participant_number, condition, item, rating, age) %>%
+  select(participant_number: age) %>%
+  mutate(kind = case_when(item == "clock" ~ 0,
+                          item == "phone" ~ 0,
+                          item == "drum" ~ 0,
+                          item == "spider" ~ 1,
+                          item == "tree" ~ 1,
+                          item == "snail" ~ 1)) %>%
+  mutate(kind = factor(kind,
+                       levels = c("0", "1"),
+                       labels = c("artifacts", "biological kinds"))) %>% 
+  group_by(participant_number, condition, kind) %>%
+  summarise(total = sum(rating),
+            percent = (total / 3) * 100) %>% 
+  mutate(condition = str_replace_all(condition, "_", " ")) %>% 
+  mutate(condition = factor(condition, levels = c("label only", "irrelevant", "purpose"))) %>% 
+  select(participant_number, condition, kind, total, percent)
+
+
+
+p2 = ggplot(data = df.plot,
+         mapping = aes(x = condition,
+                       y = percent,
+                       group = kind,
+                       color = kind,
+                       fill = kind)) + 
+    stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.9), 
+                 alpha = .9,
+                 color = "black",
+                 size = 1) +
+     geom_hline(yintercept = 50, linetype="dashed", 
+               color = "black", size=.5) +
+     geom_point(aes(color = kind,
+                   fill = kind),
+               position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               shape = 21,
+               size = 2,
+               color = "grey30",
+               alpha = .4) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.9),
+                 color = "black",
+                 size = 1.2) +
+ scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+   scale_y_continuous(breaks = seq(0, 100, 25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 100)) +
+    labs(y = "Probability of selecting \n\ taxonomic match") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 14),
+          axis.title.y = element_text(size=18),
+          axis.text.y = element_text(size = 14),
+          legend.title = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face="bold", size=16, margin = margin(t = 20, b = 20))) +
+    ggtitle("Artifacts vs. Biological Kinds")
+
+p2
+
+  
+ggsave("../../figures/exp1/exp1_condition_kind_bar.pdf",
+       height = 5, 
+       width = 8)
+
+
+
+
+```
+## Combine condition and kind plots 
+
+```{r fig.height=5, fig.width=12, message=FALSE, warning=FALSE}
+
+plot_basic = p1 + p2 &
+plot_layout(nrow = 1) &
+plot_annotation(title = "Basic-level categorization",
+                tag_levels = "A") &
+theme(plot.tag = element_text(face = "bold", size = 24),
+      plot.title = element_text(face = "bold", hjust = 0.5, size = 24))
+
+ggsave(plot_basic, filename = "../../figures/exp1/exp1_condition_kind_combined_bar.pdf", height = 5, width = 12)
+
+plot_basic
+
+```
+
+
+# EXPERIMENT 2 (Superordinate-level)
+# DATA
+## Read in data
+```{r message=FALSE, warning=FALSE}
+
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
+```
+
+## Wrangle
+
+```{r message=FALSE, warning=FALSE}
+df.exp2 = df.exp2 %>%
+  filter(completed_all_trials == 1) %>% 
+  mutate(condition = factor(condition,
+                            levels = c("0", "1", "2"),
+                            labels = c("label_only", "irrelevant", "purpose")),
+         across(.cols = purse : flower, .fns = as.numeric)) %>%
+   mutate(condition = relevel(condition, ref = "irrelevant")) %>% 
+  pivot_longer(cols = (purse: flower),
+               names_to = "item",
+               values_to = "rating",
+               values_drop_na = TRUE) %>%
+  mutate(kind = case_when(item == "purse" ~ 0,
+                          item == "shoe" ~ 0,
+                          item == "plane" ~ 0,
+                          item == "drum" ~ 0,
+                          item == "quarter" ~ 0,
+                          item == "apple" ~ 1,
+                          item == "leaf_insect" ~ 1,
+                          item == "flower" ~ 1)) %>%
+  mutate(kind = factor(kind,
+                       levels = c("0", "1"),
+                       labels = c("artifact", "biological")))
+
+# warm-up items
+df.exp2.warmup = df.exp2 %>% 
+  filter(item %in% c("purse", "shoe"))
+
+#test items
+df.exp2 = df.exp2 %>% 
+  filter(!item %in% c("purse", "shoe"))
+
+
+
+
+```
+
+
+## Demographics
+
+```{r message=FALSE, warning=FALSE}
+
+
+  # gender
+  df.exp2 %>%
+    group_by(sex) %>%
+    summarise(n = n_distinct(participant)) %>%
+    print()
+  
+  
+  # language spoken
+read.csv("../../data/exp2/exp2.csv") %>%
+  clean_names() %>%
+  mutate(native_english = ifelse(native_english == "-", NA,          as.numeric(native_english))) %>%
+  summarize(sum(native_english, na.rm = TRUE))
+
+
+
+
+```
+
+# STATS
+## Bayesian Regression
+
+```{r}
+
+# sum coding
+options(contrasts = c("contr.sum","contr.poly"))
+
+df.model = df.exp2 %>% 
+  mutate(condition = as_factor(condition),
+         condition= fct_relevel(condition, "purpose", "label_only", "irrelevant"))
+
+# Check contrast values
+ contrasts(df.model$condition)
+
+fit.brm.superordinate_level = brm(formula = rating ~ 1 + condition + (1 | participant) + (1 | item), 
+                     data = df.model,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 8000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .999999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.superordinate_level") 
+
+fit.brm.superordinate_level
+
+
+
+```
+## Hypothesis test of condition differneces and differnece from chance
+
+```{r}
+
+fit.brm.superordinate_level %>%
+  emmeans(pairwise ~ condition)
+
+
+```
+## Test of kind
+
+```{r}
+
+fit.brm.superordinate_level.kind = brm(formula = rating ~ 1 + kind + (1 | participant) + (1 | item), 
+                     data = df.model,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 8000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .999999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.superordinate_level.kind") 
+
+fit.brm.superordinate_level.kind
+
+
+```
+
+#PLOT
+
+## Condition
+
+```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
+
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
+
+df.plot = df.exp2 %>%
+  filter(completed_all_trials == 1) %>% 
+   mutate(across(.cols = plane : flower, .fns = as.numeric)) %>% 
+  select(-purse, -shoe) %>%
+    mutate(condition = factor(condition,
+                            levels = c("0", "1", "2"),
+                            labels = c("label only", "irrelevant", "purpose"))) %>% 
+  mutate(across(.cols = plane :  flower, .fns = as.numeric)) %>%
+   mutate(total = plane + drum + quarter + apple + leaf_insect + flower,
+          percent = (total / 6) * 100) %>% 
+  mutate(condition = factor(condition, levels = c("label only", "irrelevant", "purpose"))) %>% 
+  select(participant, condition, percent) 
+
+p3 = ggplot(data = df.plot,
+         mapping = aes(x = condition,
+                       y = percent,
+                       group = condition,
+                       color = condition,
+                       fill = condition)) + 
+    stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.5), 
+                 alpha = .9,
+                 color = "black",
+                 size = 1) +
+     geom_hline(yintercept = 50, linetype="dashed", 
+               color = "black", size=.5) +
+     geom_point(aes(color = condition,
+                   fill = condition),
+               position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               shape = 21,
+               size = 2,
+               color = "grey30",
+               alpha = .4) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.5),
+                 color = "black",
+                 size = 1.2) +
+ scale_fill_manual(values = c("label only" = "#377EB8", "irrelevant" = "#E41A1C", "purpose" = "#4DAF4A"), breaks=c("label only", "irrelevant", "purpose")) +
+  scale_color_manual(values = c("label only" = "#377EB8", "irrelevant" = "#E41A1C", "purpose" = "#4DAF4A"), breaks=c("label only", "irrelevant", "purpose")) +
+   scale_y_continuous(breaks = seq(0, 100, 25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 100)) +
+    labs(y = "Probability of selecting \n\ taxonomic match") +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_text(size=18),
+          axis.text.y = element_text(size = 14),
+          legend.title = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.position = "bottom",
+          axis.text.x = element_blank(),
+          plot.title = element_text(hjust = 0.5, face="bold", size=16, margin = margin(t = 20, b = 20))) +
+    ggtitle("Overall")
+
+p3
+
+  
+ggsave("../../figures/exp2/exp2_condition_bar.pdf",
+       height = 5, 
+       width = 8)
+
+```
+
+## Kind by condition 
+
+```{r fig.height=5, fig.width=8, message=FALSE, warning=FALSE}
+
+df.exp2 = read.csv("../../data/exp2/exp2.csv")
+
+df.plot = df.exp2 %>%
+  filter(completed_all_trials == 1) %>% 
+  mutate(across(.cols = plane : flower, .fns = as.numeric)) %>%
+  mutate(condition = factor(condition,
+                            levels = c("0", "1", "2"),
+                            labels = c("label only", "irrelevant", "purpose"))) %>% 
+  select(-purse, -shoe) %>%
+  pivot_longer(cols = (plane: flower),
+               names_to = "item",
+               values_to = "rating",
+               values_drop_na = TRUE) %>%
+  relocate(participant, condition, item, rating, age) %>%
+  select(participant: age) %>%
+  mutate(kind = case_when( item == "plane" ~ 0,
+                          item == "drum" ~ 0,
+                          item == "quarter" ~ 0,
+                          item == "apple" ~ 1,
+                          item == "leaf_insect" ~ 1,
+                          item == "flower" ~ 1)) %>%
+  mutate(kind = factor(kind,
+                       levels = c("0", "1"),
+                       labels = c("artifacts", "biological kinds"))) %>% 
+  group_by(participant, condition, kind) %>%
+  summarise(total = sum(rating),
+            percent = (total / 3) * 100) %>% 
+  mutate(condition = factor(condition, levels = c("label only", "irrelevant", "purpose"))) %>% 
+  select(participant, condition, kind, total, percent)
+
+
+
+p4 = ggplot(data = df.plot,
+         mapping = aes(x = condition,
+                       y = percent,
+                       group = kind,
+                       color = kind,
+                       fill = kind)) + 
+    stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.9), 
+                 alpha = .9,
+                 color = "black",
+                 size = 1) +
+     geom_hline(yintercept = 50, linetype="dashed", 
+               color = "black", size=.5) +
+     geom_point(aes(color = kind,
+                   fill = kind),
+               position = position_jitterdodge(dodge.width = 0.8,
+                                               jitter.width = 0.5,
+                                               jitter.height = 0.0),
+               shape = 21,
+               size = 2,
+               color = "grey30",
+               alpha = .4) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.9),
+                 color = "black",
+                 size = 1.2) +
+ scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+   scale_y_continuous(breaks = seq(0, 100, 25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 100)) +
+    labs(y = "Probability of selecting \n\ taxonomic match") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(size = 14),
+          axis.text.y = element_text(size = 14),
+          axis.title.y = element_text(size=18),
+          legend.title = element_blank(),
+          legend.text = element_text(size = 14),
+          legend.position = "bottom",
+          plot.title = element_text(hjust = 0.5, face="bold", size=16, margin = margin(t = 20, b = 20))) +
+    ggtitle("Artifacts vs. Biological Kinds")
+
+p4
+
+  
+ggsave("../../figures/exp2/exp2_condition_kind_bar.pdf",
+       height = 5, 
+       width = 8)
+
+
+
+
+```
+## Combine condition and kind plots 
+
+```{r fig.height=5, fig.width=12, message=FALSE, warning=FALSE}
+
+plot_super = p3 + p4 &
+plot_layout(nrow = 1) &
+plot_annotation(title = "Superordinate-level categorization",
+                tag_levels = "A") &
+theme(plot.tag = element_text(face = "bold", size = 24),
+      plot.title = element_text(face = "bold", hjust = 0.5, size = 24))
+
+ggsave(plot_super, filename = "../../figures/exp2/exp2_condition_kind_combined_bar.pdf", height = 5, width = 12)
+
+plot_super
+
+```
+#EXPERIMENT 3 (Norming)
+#PART 1 (What is this for?)
+#DATA
+## Read in data
+
+```{r message=FALSE, warning=FALSE}
+
+df.exp3a = read_csv("../../data/exp3/norming_study/exp3_norm_part1.csv")
+
+```
+
+## Wrangle
+
+```{r}
+
+df.exp3a = df.exp3a %>% 
+  select(participant, age, sink:shirt) %>% 
+  pivot_longer(., cols = sink:shirt,
+               names_to = "item",
+               values_to = "text")
+  
+```
+
+## Demographics
+
+```{r}
+
+read_csv("../../data/exp3/norming_study/exp3_norm_part1.csv")%>% 
+  group_by(gender) %>% 
+  count()
+
+read_csv("../../data/exp3/norming_study/exp3_norm_part1.csv") %>% 
+  group_by(native_english) %>% 
+  count()
+
+```
+
+#PLOTS
+
+### Probability of top 10 words for all items
+```{r fig.height=20, fig.width=20, message=FALSE, warning=FALSE}
+
+# 1 grams
+df.1gram = df.exp3a %>% 
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) 
+
+df.plot = df.1gram %>% 
+  group_by(item) %>% 
+  count(word, sort = TRUE) %>% 
+  group_by(item) %>% 
+  mutate(item_total = sum(n),
+         probability = round(n/item_total * 100, 2),
+         rank = row_number(desc(probability))) %>%
+  filter(rank <= 10) %>%
+  mutate(word = reorder_within(word, probability, item)) %>%
+  ungroup() %>%
+  drop_na() %>% 
+   separate(word, into = c("word1", "word2"), sep = "___") %>%
+  select(-word2) %>% 
+  rename(word = word1)
+
+  
+
+ggplot(data = df.plot, aes(x = word, y = probability)) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "red") +
+  geom_hline(yintercept = 25, linetype = "dashed", color = "blue") +
+  geom_col(position = "dodge") +
+  facet_wrap(~ item, scales = "free_x") +
+  ggtitle("Probability of Words by Item") +
+  scale_y_continuous(breaks = seq(0, 100, 25),
+                     labels = str_c(seq(0, 100, 25), "%"),
+                     limits = c(0, 100)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave(width = 20, height = 20, "../../figures/exp3/norming/part1/exp3a_topwords_by_item_probability.pdf")
+
+
+```
+
+### One gram probability of selected items 
+```{r message=FALSE, warning=FALSE}
+
+# 1 grams
+df.1gram_selected = df.exp3a %>% 
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words) 
+
+df.plot = df.1gram_selected %>% 
+  na.omit() %>%
+  group_by(item) %>% 
+  count(word, sort = TRUE) %>% 
+  group_by(item) %>% 
+  mutate(item_total = sum(n),
+         probability = round(n/item_total * 100, 2),
+         rank = row_number(desc(probability))) %>%
+  filter(rank <= 10) %>%
+  mutate(word = reorder_within(word, probability, item)) %>%
+  ungroup() %>%
+  drop_na() %>% 
+   separate(word, into = c("word1", "word2"), sep = "___") %>%
+  select(-word2) %>% 
+  rename(word = word1) %>% 
+  filter(item %in% c("chicken", "monkey", "sink", "toilet", "lion", "cow", "birdfeeder", "coffeepot", "bee", "spider", "lamp", "umbrella", "skunk", "squirrel", "plate", "clock"))
+
+df.plot.artifacts = df.plot %>% 
+  filter(item %in% c("sink", "toilet", "birdfeeder", "coffeepot", "lamp", "umbrella", "plate", "clock"))
+
+df.plot.animals = df.plot %>% 
+  filter(item %in% c("chicken", "monkey", "lion", "cow", "bee", "spider", "skunk", "squirrel"))
+
+
+p5 = ggplot(data = df.plot.artifacts, aes(x = word,
+                           y = probability)) +
+  geom_col(position = "dodge",
+            color = "black",
+                           fill = "#984EA3") +
+  facet_wrap(~ item, scales = "free_x",
+             nrow = 2) +
+  scale_y_continuous(limits = c(0, 100), 
+                     expand = c(0, 0),
+                     labels = str_c(seq(0, 100, 25), "%")) +
+   labs(y = "Probability of word") +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "black") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, face="bold", size=20, margin = margin(t = 20, b = 20))) +
+    ggtitle("Top Artifacts")
+
+
+p6 = ggplot(data = df.plot.animals, aes(x = word,
+                           y = probability)) +
+  geom_col(position = "dodge",
+            color = "black",
+                           fill = "#FF7F00") +
+  facet_wrap(~ item, scales = "free_x",
+             nrow = 2) +
+  scale_y_continuous(limits = c(0, 100), 
+                     expand = c(0, 0),
+                     labels = str_c(seq(0, 100, 25), "%")) +
+   labs(y = "Probability of word") +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "black") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        axis.title.x = element_blank(),
+        plot.title = element_text(hjust = 0.5, face="bold", size=20, margin = margin(t = 20, b = 20))) +
+    ggtitle("Top Biological Kinds")
+
+```
+
+### Combine artifact and biological kind select item plots
+
+```{r fig.height=5, fig.width=12, message=FALSE, warning=FALSE}
+
+plot_word = p5 + p6 + 
+  plot_layout(nrow = 1) 
+
+ggsave(plot_word, filename = "../../figures/exp3/norming/part1/exp3a_item_kind_combined_bar.pdf", height = 5, width = 12)
+
+plot_word
+
+
+```
+
+# PART 2 (What one is for this?)
+## Read in data
+
+```{r message=FALSE, warning=FALSE}
+
+df.exp3b = read_csv("../../data/exp3/norming_study/exp3_norm_part2.csv")
+
+```
+
+## Wrangle
+
+```{r message=FALSE, warning=FALSE}
+
+df.exp3b = df.exp3b %>%
+  filter(participant %in% (1:40)) %>% 
+  select(participant, gender, language, make_honey:protect_us_from_rain) %>% 
+  pivot_longer(cols = make_honey:protect_us_from_rain,
+               names_to = "item",
+               values_to = "response") %>% 
+  na.omit()
+
+```
+
+## Demographics
+
+```{r message=FALSE, warning=FALSE}
+
+  # gender
+read_csv("../../data/exp3/norming_study/exp3_norm_part2.csv") %>% 
+  filter(participant %in% (1:40)) %>%
+  group_by(gender) %>%
+  summarise(n = n_distinct(participant)) %>%
+  print()
+
+  
+  # language spoken
+read_csv("../../data/exp3/norming_study/exp3_norm_part2.csv") %>% 
+  filter(participant %in% (1:40)) %>%
+  mutate(en_occurrence = ifelse(str_detect(language, "en"), "en", "non-en")) %>%
+  group_by(en_occurrence) %>%
+  summarise(n = n_distinct(participant)) %>%
+  print()
+
+
+```
+
+#PLOTS
+## Correct Selections for Artifacts and Biological Kinds
+
+```{r message=FALSE, warning=FALSE}
+
+df.plot = df.exp3b %>% 
+  filter(item %in% c("make_honey", "feed_birds", "lay_eggs", "tell_time", "hold_coffee", "make_milk", "provide_light", "roar", "swing_from_trees", "eat_on", "wash_hands", "smell_stinky", "make_webs", "eat_nuts", "go_to_bathroom", "protect_us_from_rain")) %>% 
+  mutate(item = as.factor(item),
+         item = recode(item, 
+                       "make_honey" = "bee",
+                       "feed_birds" = "bird feeder",
+                       "lay_eggs" = "chicken",
+                       "tell_time" = "clock",
+                       "hold_coffee" = "coffee pot",
+                       "make_milk" = "cow",
+                       "provide_light" = "lamp",
+                       "roar" = "lion",
+                       "swing_from_trees" = "monkey",
+                       "eat_on" = "plate",
+                       "wash_hands" = "sink",
+                       "smell_stinky" = "skunk",
+                       "make_webs" = "spider",
+                       "eat_nuts" = "squirrel",
+                       "go_to_bathroom" = "toilet",
+                       "protect_us_from_rain" = "umbrella")) 
+
+df.plot.artifacts = df.plot %>% 
+  filter(item %in% c("bird feeder", "clock", "coffee pot", "lamp", "plate", "sink", "toilet", "umbrella")) 
+
+df.plot.animals = df.plot %>%
+  filter(item %in% c("bee", "chicken", "cow", "lion", "monkey", "skunk", "spider", "squirrel"))
+
+
+
+p7 = ggplot(data = df.plot.artifacts,
+       mapping = aes(x = item, 
+                     y = response)) +
+   stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.5), 
+                 alpha = 0.8,
+                 color = "black",
+                fill = "#984EA3",
+                size = 1.5) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.5),
+                 color = "black",
+                 size = .7) +
+    # scale_fill_manual(values = my_palette) +
+    # scale_color_manual(values = my_palette) +
+   scale_y_continuous(breaks = seq(0, 1, .25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 1)) +
+    labs(y = "Probability of selecting \n\ object with purpose") +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_text(size=14),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, face="bold", size=20, margin = margin(t = 20, b = 20))) +
+    ggtitle("Top Artifacts")
+
+
+
+p8 = ggplot(data = df.plot.animals,
+       mapping = aes(x = item, 
+                     y = response)) +
+   stat_summary(fun = mean, 
+                 geom = "bar", 
+                 position = position_dodge(width = 0.5), 
+                 alpha = 0.8,
+                 color = "black",
+                fill = "#FF7F00",
+                size = 1.5) +
+    stat_summary(fun.data = mean_cl_boot, 
+                 geom = "linerange", 
+                 position = position_dodge(width = 0.5),
+                 color = "black",
+                 size = .7) +
+    # scale_fill_manual(values = my_palette) +
+    # scale_color_manual(values = my_palette) +
+   scale_y_continuous(breaks = seq(0, 1, .25),
+                        labels = str_c(seq(0, 100, 25), "%"),
+                       limits = c(0, 1)) +
+    labs(y = "Probability of selecting \n\ object with purpose") +
+    theme(axis.title.x = element_blank(),
+          axis.title.y = element_text(size=14),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5, face="bold", size=20, margin = margin(t = 20, b = 20))) +
+    ggtitle("Top Biological Kinds")
+
+
+```
+
+## Combine artifact and biological kind plots
+
+```{r fig.height=5, fig.width=12, message=FALSE, warning=FALSE}
+
+plot_correct = p7 + p8 + 
+  plot_layout(nrow = 1) 
+
+ggsave(plot_correct, filename = "../../figures/exp3/norming/part2/exp3b_item_kind_combined_bar.pdf", height = 5, width = 12)
+
+plot_correct
+
+
+```
+
+# EXPERIMENT 3 (Transformation)
+
+## Read in data
+
+```{r message=FALSE, warning=FALSE}
+
+df.exp3 = read_csv("../../data/exp3/exp3.csv")
+
+```
+
+## Wrangle
+
+```{r}
+
+df.exp3 = df.exp3 %>%
+  select(participant_number, age_exact, condition, lion:plate) %>%
+  pivot_longer(cols = lion:plate,
+               names_to = "item",
+               values_to = "response") %>%
+  mutate(kind = ifelse(item %in% c("bee", "skunk", "lion"), "biological kinds", "artifacts"),
+         age_whole = as.integer(age_exact),
+         condition = str_replace_all(condition, "keil", "control")) %>% 
+  rename(age = age_exact) 
+
+  
+```
+
+## Demographics
+
+```{r message=FALSE, warning=FALSE}
+
+
+  # gender
+read_csv("../../data/exp3/exp3.csv") %>%
+  group_by(gender) %>%
+  summarise(n = n_distinct(participant_number)) %>%
+  print()
+
+  
+  # language spoken
+read_csv("../../data/exp3/exp3.csv") %>%
+  mutate(en_occurrence = ifelse(str_detect(lan_spoken, "en"), "en", "non-en")) %>%
+  group_by(en_occurrence) %>%
+  summarise(n = n_distinct(participant_number)) %>%
+  print()
+
+
+
+```
+
+# STATS
+## Bayesian Models
+### Hypothesis 1
+
+```{r}
+
+df.artifacts = df.exp3 %>% 
+  filter(kind == "artifacts")
+
+fit.brm.artifacts = brm(formula = response ~ 1 + condition*age + (1 | participant_number) + (1 | item), 
+                     data = df.artifacts,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .9999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.artifacts")
+
+fit.brm.artifacts
+
+```
+
+### Hypothesis 2
+
+```{r}
+
+df.biological = df.exp3 %>% 
+  filter(kind == "biological kinds")
+
+fit.brm.biological = brm(formula = response ~ 1 + condition*age + (1 | participant_number) + (1 | item), 
+                     data = df.biological,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .9999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.biological")
+
+fit.brm.biological
+
+```
+
+### Hypothesis 3
+
+```{r}
+
+
+df.purpose = df.exp3 %>% 
+  filter(condition == "purpose")
+
+fit.brm.purpose = brm(formula = response ~ 1 + kind*age + (1 | participant_number) + (1 | item), 
+                     data = df.purpose,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .9999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.purpose")
+
+fit.brm.purpose
+
+```
+
+### Hypothesis 4
+
+```{r}
+
+df.control = df.exp3 %>% 
+  filter(condition == "control")
+
+fit.brm.control = brm(formula = response ~ 1 + kind*age + (1 | participant_number) + (1 | item), 
+                     data = df.control,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     control = list(adapt_delta = .9999,
+                                    max_treedepth = 15),
+                     file = "cache/fit.brm.control")
+
+fit.brm.control
+
+```
+
+# PLOTS
+
+## Bayesian Logistic Regression + Means for Purpose and Control Across Age
+
+```{r fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
+
+fit.brm.purpose.plot = brm(formula = response ~ 1 + kind*age + (1 | participant_number), 
+                     data = df.purpose,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     file = "cache/fit.brm.purpose.plot")
+
+fit.brm.control.plot = brm(formula = response ~ 1 + kind*age + (1 | participant_number),
+                     data = df.control,
+                     family = "bernoulli",
+                     seed = 1,
+                     iter = 4000,
+                     warmup = 1000,
+                     file = "cache/fit.brm.control.plot")
+
+df.data = df.exp3 %>% 
+  group_by(age_whole, kind, condition) %>%
+  mutate(age = mean(age)) %>%
+  group_by(age, kind, condition) %>%
+  reframe(value = Hmisc::smean.cl.boot(response),
+          name = c("response", "low", "high")) %>%
+  pivot_wider()
+
+df.range = expand_grid(age = seq(5, 10, 0.1),
+                      kind = c("artifacts", "biological kinds"),
+                      condition = c("purpose", "control"))
+
+df.plot.purpose = fit.brm.purpose.plot %>%
+  fitted(newdata = df.range %>% 
+           filter(condition == "purpose"),
+         re_formula = NA,
+         probs = c(0.025, 0.975)) %>% 
+  as_tibble() %>% 
+  bind_cols(df.range %>% 
+              filter(condition == "purpose"))
+
+df.plot.control = fit.brm.control.plot %>%
+  fitted(newdata = df.range %>% 
+           filter(condition == "control"),
+         re_formula = NA,
+         probs = c(0.025, 0.975)) %>% 
+  as_tibble() %>% 
+  bind_cols(df.range %>% 
+              filter(condition == "control"))
+
+df.plot = bind_rows(df.plot.purpose, df.plot.control) %>%
+  clean_names()
+
+df.points = df.exp3 %>%
+  group_by(participant_number, age, kind, condition) %>%
+  summarise(response = mean(response))
+
+custom_labels = as_labeller(c("control" = "Standard Version", "purpose" = "Purpose Version"))
+
+ggplot() +
+  geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
+   geom_point(data = df.points,
+             mapping = aes(x = age,
+                           y = response,
+                           color = kind,
+                           fill = kind,
+                           shape = kind),
+             alpha = 0.2,
+             size = 2,
+             position = position_jitterdodge(dodge.width = 0.1,
+                                             jitter.width = 0.0,
+                                             jitter.height = 0.0)) +
+  geom_smooth(data = df.plot,
+              mapping = aes(y = estimate,
+                            x = age,
+                            ymin = q2_5,
+                            ymax = q97_5,
+                            color = kind,
+                            fill = kind),
+              stat = "identity",
+              alpha = 0.2, 
+              show.legend = FALSE) +
+  geom_pointrange(data = df.data,
+                  mapping = aes(y = response,
+                                x = age,
+                                ymin = low,
+                                ymax = high,
+                                fill = kind,
+                                shape = kind),
+                  color = "black",
+                  size = 0.5,
+                  show.legend = TRUE,
+                  alpha = 0.8,
+                  position = position_dodge(width = 0.5)) +
+  scale_fill_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_color_manual(values = c("artifacts" = "#984EA3", "biological kinds" = "#FF7F00"), breaks=c("artifacts", "biological kinds")) +
+  scale_shape_manual(values = c(21, 23)) +
+  scale_y_continuous(breaks = seq(0, 1, 0.25),
+                     labels = str_c(seq(0, 1, 0.25) * 100, "%")) +
+  scale_x_continuous(breaks = 5:10,
+                     labels = c("5", "6", "7", "8", "9", "10")) +
+  labs(y = "Probability of selecting \n original thing") +  
+  ggtitle("Artifacts vs. Biological Kinds \n in Control and Purpose Conditions") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank(),
+        text = element_text(size = 18),
+        plot.title = element_text(hjust = 0.5,
+                                  face="bold",
+                                  size=20,
+                                  margin = margin(t = 20, b = 20))) +
+  facet_wrap(~condition,
+             labeller = custom_labels)
+
+ggsave(height = 6, width = 10, "../../figures/exp3/exp3.pdf")
+
+```
+
+# SESSION INFO
+
+```{r}
+
+sessionInfo()
+
+```
