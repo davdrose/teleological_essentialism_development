@@ -1,8 +1,8 @@
 # Teleological essentialism in development
 
-This repository contains the experiments, data, analyses, and figures for the paper "Teleology, shape and transformations," by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman.
+This repository contains the experiments, data, analyses, and figures for the paper "Teleological essentialism in development," by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman.
 
-The preprint can be found [here](https://UPDATE)
+<!-- The preprint can be found [here](https://UPDATE)-->
 
 __Contents__:
 - [Introduction](#Introduction)
