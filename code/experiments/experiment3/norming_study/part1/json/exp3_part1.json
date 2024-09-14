@@ -1,0 +1,810 @@
+{
+    "frames": {
+        "exit-survey": {
+            "kind": "exp-lookit-exit-survey",
+            "debriefing": {
+                "text": "Tell a kindergartner that a raccoon has undergone surgery so that it now looks like a skunk and they can’t help but view the thing as a skunk (Keil, 1992). Ask if it would still be a skunk if it’s mommy and daddy were raccoons, or if its babies were raccoons and you’ll likely be met with a resounding “yes”. While younger children tend to categorize things based on what they look like, older children and adults often go beyond mere appearance, and take into account other properties that really make a thing the thing that it is (Medin & Ortony, 1989; Gelman, 2003; Keil, 1992; Atran, 1995). There has been a lot of interest in trying to understand how children categorize and we are interested in whether providing information about function -- what things are for, will allow children to overcome their tendency to solely rely on appearance when engaging in categorization tasks. This specific study is the first part of a series of future experiments. We aim for collecting responses from children about different items' purposes. 4-6 year old children were given 40 items and asked what they are for.  For each item, the top mentioned purpose will be used in developing subsequent experimental stimuli. We have no specific hypothesis but are instead only identifying items that can be used for future work. Although children's answers can vary, there aren't any “right” or “wrong” answers to the questions. We are just interested in looking at the average responses from children and we won't take any specific answers as “good” or “bad”. \n\n If you are interested in learning more about this, please see the following experimental paper as <a href='https://books.google.com/books?hl=en&lr=&id=vbOCF_qzX1QC&oi=fnd&pg=PR9&dq=frank+keil+appearance&ots=D51V0two4a&sig=Qh2wrc3GBz8YOYgpUgLsOC3xdwQ#v=onepage&q=frank%20keil%20appearance&f=false' target='_blank' rel='noopener'>here.</a> \n\n Thank you again for your participation! Gift cards will be sent within one week of study completion. Please note that we only offer Amazon.com gift card at this time, thanks for your understanding!",
+                "title": "Thank you!"
+            }
+        },
+        "start-recording-with-image": {
+            "kind": "exp-lookit-start-recording",
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "image": "peekaboo_remy.jpg",
+            "imageAnimation": "spin",
+            "displayFullscreen": true
+        },
+        "stop-recording-with-video": {
+            "kind": "exp-lookit-stop-recording",
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "video": "attentiongrabber",
+            "displayFullscreen": true,
+            "showProgressBar": true,
+            "waitForUploadMessage": " "
+        },
+        "instructions": {
+            "kind": "exp-lookit-instructions",
+            "blocks": [
+                {
+                    "title": "1. Overview of what we're doing today",
+                    "listblocks": [
+                        {
+                            "text": "All together, it will take about 15-20 minutes to finish this study."
+                        },
+                        {
+                            "text": "Maggie is going to ask you some questions and you can say whatever it is that you think."
+                        },
+                        {
+                            "text": "There aren’t any right or wrong answers, so just tell Maggie what you think ! "
+                        }
+                    ]
+                },
+                {
+                    "text": "Please try playing this sample audio to make sure you'll be able to hear the story.",
+                    "title": "2. Adjust your speakers",
+                    "mediaBlock": {
+                        "text": "You should hear 'Ready to go?'",
+                        "isVideo": false,
+                        "sources": [
+                            {
+                                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.mp3",
+                                "type": "audio/mp3"
+                            },
+                            {
+                                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.ogg",
+                                "type": "audio/ogg"
+                            }
+                        ],
+                        "mustPlay": true,
+                        "warningText": "Please try playing the sample audio."
+                    }
+                }
+            ],
+            "showWebcam": true,
+            "webcamBlocks": [
+                {
+                    "title": "3. Make sure we can see you",
+                    "listblocks": [
+                        {
+                            "text": "Take a look at your webcam view above. Get comfy, and adjust your own position or the computer as needed so both you and your child are visible."
+                        },
+                        {
+                            "text": "This isn't a Skype call - no one in the lab can see you - but the recorded video of your participation will be sent to the lab to help with data analysis. It's helpful for us to be able to see if your child was pointing or looking confused, for example."
+                        }
+                    ]
+                }
+            ],
+            "nextButtonText": "Next"
+        },
+        "video-config": {
+            "kind": "exp-video-config"
+        },
+        "video-consent": {
+            "kind": "exp-lookit-video-consent",
+            "template": "consent_005",
+            "PIName": "Dr. Ellen Markman",
+            "PIContact": "Ellen Markman at markman@stanford.edu",
+            "include_databrary": true,
+            "risk_statement": "There are no expected risks to participation.",
+            "datause": "A research assistant will watch your video and mark down your child's answer to the question at the end of the story, and as well as other information such as interactions between you and your child during the story.",
+            "payment": "After you finish the study, we will email you a $5 Amazon gift card within approximately 5-7 business days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
+            "purpose": "Previous work has suggested that younger children tend to categorize things based on what they look like. For example, tell a kindergartner that a raccoon has undergone surgery so that it now looks like a skunk and they can’t help but view the thing as a skunk (Keil, 1992). We are interested in whether providing information about function will allow children to categorize things in a way that goes beyond the mere appearance. In this study, our focus is on identifying items for which children converge on a purpose. We have no specific hypothesis but are instead identifying items that can be used in developing subsequent experiments. In these experiments, we plan to make changes to what a thing looks like and/or what it is for and see how children categorize the thing after those changes.",
+            "procedures": "In this study, your child will meet Maggie, who is curious about what different things are for. Your child will be shown some pictures and be asked to teach the curious Maggie what different things are for.",
+            "institution": "The Markman Lab of Stanford University"
+        },
+        "introduction": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/norming_study/part1/",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "doRecording": false,
+            "parentTextBlock": {
+                "css": {
+                    "font-size": "1.5em"
+                },
+                "text": "Please help keep your child's attention, but don't talk with them about what you think.",
+                "title": "For parents"
+            },
+            "audio": "exp3_part1_welcome",
+            "position": "fill",
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_part1_welcome.jpeg",
+                    "top": 0,
+                    "left": 0,
+                    "width": 120
+                }
+            ]
+        },
+        "before-we-get-started": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/norming_study/part1/",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "displayFullscreen": true,
+            "audio": "exp3_part1_before_we_get_started",
+            "doRecording": false,
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_part1_before_we_get_started.jpeg",
+                    "top": 0,
+                    "left": 0,
+                    "width": 120
+                }
+            ]
+        },
+        "end": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/norming_study/part1/",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "doRecording": false,
+            "displayFullscreen": true,
+            "parentTextBlock": {
+                "css": {
+                    "font-size": "1.5 em"
+                },
+                "text": "Thank you very much for your participation. We look forward to seeing you with more research games in the future. ",
+                "title": "For parents"
+            },
+            "audio": "exp3_part1_end",
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_part1_end.jpeg",
+                    "top": 0,
+                    "left": 0,
+                    "width": 120
+                }
+            ]
+        },
+        "warmup": {
+            "kind": "group",
+            "frameList": [
+                {
+                    "kind": "group",
+                    "frameList": [
+                        {
+                            "audio": "exp3_part1_warmup_1",
+                            "autoProceed": true,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_1.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_2",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_2.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_3",
+                            "autoProceed": true,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_3.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_4",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_4.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_5",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_5.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_6",
+                            "autoProceed": true,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_6.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_7",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_7.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_8",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_8.jpeg",
+                                    "top": 0,
+                                    "left": 10,
+                                    "width": 80
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_warmup_9",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_warmup_9.jpeg",
+                                    "position": "fill"
+                                }
+                            ]
+                        },
+                        {
+                            "audio": "exp3_part1_main_intro",
+                            "autoProceed": false,
+                            "images": [
+                                {
+                                    "id": "storybookIllustration",
+                                    "src": "exp3_part1_main_intro.jpeg",
+                                    "position": "fill"
+                                }
+                            ]
+                        }
+                    ],
+                    "commonFrameProperties": {
+                        "kind": "exp-lookit-images-audio",
+                        "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/norming_study/part1/",
+                        "id": "storybook-group",
+                        "audioTypes": [
+                            "mp3",
+                            "ogg"
+                        ],
+                        "autoProceed": true,
+                        "doRecording": false
+                    }
+                }
+            ]
+        },
+        "main-study-question-book": {
+            "kind": "choice",
+            "sampler": "permute",
+            "id": "curiousMaggieMain",
+            "commonFrameProperties": {
+                "kind": "exp-lookit-images-audio",
+                "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/norming_study/part1/",
+                "showPreviousButton": false,
+                "audioTypes": [
+                    "mp3",
+                    "ogg"
+                ],
+                "autoProceed": true,
+                "doRecording": false,
+                "durationSeconds": 4.5,
+                "parentTextBlock": {
+                    "css": {
+                        "font-size": "1.3em"
+                    },
+                    "text": "Please encourage your child to respond and don't interfere with their answers. \n It's okay if your child doesn't know the answer. Click \"next\" to proceed. \n Thank you!",
+                    "title": "For parents"
+                }
+            },
+            "frameOptions": [
+                {
+                    "audio": "exp3_part1_sink",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_sink.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_toilet",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_toilet.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_bunny",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_bunny.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_dog",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_dog.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_birdfeeder",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_birdfeeder.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_coffeepot",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_coffeepot.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_bee",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_bee.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_spider",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_spider.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_chicken",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_chicken.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_pig",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_pig.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_plate",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_plate.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_clock",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_clock.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_cow",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_cow.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_bear",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_bear.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_umbrella",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_umbrella.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_lamp",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_lamp.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_skunk",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_skunk.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_lion",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_lion.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_mosquito",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_mosquito.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_woodpecker",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_woodpecker.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_beaver",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_beaver.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_vulture",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_vulture.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_dolphin",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_dolphin.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_monkey",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_monkey.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_giraffe",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_giraffe.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_squirrel",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_squirrel.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_frog",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_frog.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_snake",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_snake.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_chair",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_chair.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_table",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_table.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_toybox",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_toybox.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_babycrib",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_babycrib.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_cup",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_cup.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_toothbrush",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_toothbrush.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_comb",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_comb.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_spoon",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_spoon.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_shovel",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_shovel.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_flowerpot",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_flowerpot.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_towel",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_towel.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                },
+                {
+                    "audio": "exp3_part1_shirt",
+                    "autoProceed": false,
+                    "images": [
+                        {
+                            "id": "curiousMaggieMain",
+                            "src": "exp3_part1_shirt.jpeg",
+                            "position": "fill"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "sequence": [
+        "instructions",
+        "video-config",
+        "video-consent",
+        "before-we-get-started",
+        "start-recording-with-image",
+        "introduction",
+        "warmup",
+        "main-study-question-book",
+        "end",
+        "stop-recording-with-video",
+        "exit-survey"
+    ]
+}

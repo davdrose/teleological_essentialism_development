@@ -1,0 +1,572 @@
+{
+    "frames": {
+        "exit-survey": {
+            "kind": "exp-lookit-exit-survey",
+            "debriefing": {
+                "text": "Previous research has shown that adults tend to categorize objects based on their purpose, even when they are changed to look different. Here we are studying how children categorize objects when their appearances are altered. Specifically, we want to know if knowing the purpose of an object affects how children categorize it. For example, if a hotplate looks like a clock after undergoing a change, but still only heats up and doesn't tell time, what do children think it is? Do they consider it a hotplate or a clock? Our focus is on human made objects like clocks and toasters, as well as living things that can move on their own, such as cats and fish. By doing this study, we hope to gain insights into the cognitive processes underlying children's categorization judgments. Although children’s answers can vary, there aren’t any “right” or “wrong” answers to the questions. We are just interested in looking at the average responses from children and we won’t take any specific answers as “good” or “bad”. \n\n If you are interested in learning more about this, please see the following experimental paper as <a href='https://onlinelibrary.wiley.com/doi/epdf/10.1111/cogs.12725' target='_blank' rel='noopener'>here.</a> \n\n Thank you again for your participation! Gift cards will be sent within one week of study completion. Please note that we only offer Amazon.com gift card at this time, thanks for your understanding!",
+                "title": "Thank you!"
+            }
+        },
+        "start-recording-with-image": {
+            "kind": "exp-lookit-start-recording",
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "image": "peekaboo_remy.jpg",
+            "imageAnimation": "spin",
+            "displayFullscreen": true
+        },
+        "stop-recording-with-video": {
+            "kind": "exp-lookit-stop-recording",
+            "baseDir": "https://www.mit.edu/~kimscott/placeholderstimuli/",
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ],
+            "video": "attentiongrabber",
+            "displayFullscreen": true,
+            "showProgressBar": true,
+            "waitForUploadMessage": " "
+        },
+        "instructions": {
+            "kind": "exp-lookit-instructions",
+            "blocks": [
+                {
+                    "title": "1. Overview of what we're doing today",
+                    "listblocks": [
+                        {
+                            "text": "All together, it will take about 15-20 minutes to finish this study."
+                        },
+                        {
+                            "text": "Maggie is going to ask you some questions and you can say whatever it is that you think."
+                        },
+                        {
+                            "text": "There aren’t any right or wrong answers, so just tell Maggie what you think ! "
+                        }
+                    ]
+                },
+                {
+                    "text": "Please try playing this sample audio to make sure you'll be able to hear the story.",
+                    "title": "2. Adjust your speakers",
+                    "mediaBlock": {
+                        "text": "You should hear 'Ready to go?'",
+                        "isVideo": false,
+                        "sources": [
+                            {
+                                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.mp3",
+                                "type": "audio/mp3"
+                            },
+                            {
+                                "src": "https://s3.amazonaws.com/lookitcontents/exp-physics-final/audio/ready.ogg",
+                                "type": "audio/ogg"
+                            }
+                        ],
+                        "mustPlay": true,
+                        "warningText": "Please try playing the sample audio."
+                    }
+                }
+            ],
+            "showWebcam": true,
+            "webcamBlocks": [
+                {
+                    "title": "3. Make sure we can see you",
+                    "listblocks": [
+                        {
+                            "text": "Take a look at your webcam view above. Get comfy, and adjust your own position or the computer as needed so both you and your child are visible."
+                        },
+                        {
+                            "text": "This isn't a Skype call - no one in the lab can see you - but the recorded video of your participation will be sent to the lab to help with data analysis. It's helpful for us to be able to see if your child was pointing or looking confused, for example."
+                        }
+                    ]
+                }
+            ],
+            "nextButtonText": "Next"
+        },
+        "video-config": {
+            "kind": "exp-video-config"
+        },
+        "video-consent": {
+            "kind": "exp-lookit-video-consent",
+            "template": "consent_005",
+            "PIName": "Dr. Ellen Markman",
+            "PIContact": "stanford.markman.lab@gmail.com",
+            "include_databrary": true,
+            "risk_statement": "There are no expected risks to participation.",
+            "datause": "A research assistant will watch your video and mark down your child's answer to the question at the end of the story, and as well as other information such as interactions between you and your child during the story.",
+            "payment": "After you finish the study, we will email you a $5 Amazon gift card within approximately 5-7 business days. To be eligible for the gift card your child must be in the age range for this study, you need to submit a valid consent statement, and we need to see that there is a child with you. But we will send a gift card even if you do not finish the whole study or we are not able to use your child's data! There are no other direct benefits to you or your child from participating, but we hope you will enjoy the experience.",
+            "purpose": "Previous research has shown that adults tend to categorize objects based on their purpose, even when they are changed to look different. Here we are studying how children categorize objects when their appearances are altered. Specifically, we want to know if knowing the purpose of an object affects how children categorize it. For example, if a hotplate looks like a clock after undergoing a change, but still only heats up and doesn't tell time, what do children think it is? Do they consider it a hotplate or a clock? Our focus is on human made objects like clocks and toasters, as well as living things that can move on their own, such as cats and fish. By doing this study, we wonder how children make categorization judgments.",
+            "institution": "Stanford University"
+        },
+        "before-we-get-started": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "displayFullscreen": true,
+            "audio": "exp3_reminder",
+            "doRecording": false,
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_reminder.jpeg",
+                    "top": 0,
+                    "left": 0,
+                    "width": 120
+                }
+            ]
+        },
+        "end": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "doRecording": false,
+            "displayFullscreen": true,
+            "parentTextBlock": {
+                "css": {
+                    "font-size": "1.3em",
+                    "background-color": "#f8f3bf"
+                },
+                "text": "Thank you very much for your participation. \n We look forward to seeing you with more research games in the future. ",
+                "title": "For parents"
+            },
+            "audio": "exp3_end",
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_end.jpeg",
+                    "position": "fill"
+                }
+            ]
+        },
+        "introduction": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "doRecording": false,
+            "audio": "exp3_welcome",
+            "position": "fill",
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_welcome.jpeg",
+                    "position": "fill"
+                }
+            ]
+        },
+        "positioning-config": {
+            "kind": "exp-video-config-quality",
+            "title": "It's time to get your child and get in position!",
+            "introText": "",
+            "showRecordMenu": false,
+            "requireTestVideo": false,
+            "completedItemText": "Got it!",
+            "instructionBlocks": [
+                {
+                    "title": "Center your webcam if needed",
+                    "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to see your video.",
+                    "image": {
+                        "src": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1/exp3_centering.jpeg",
+                        "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
+                    }
+                },
+                {
+                    "title": "Make sure you can clearly see your child's face",
+                    "text": "Take a few moments to get settled and make sure your child's face is clearly visible in the webcam preview to the right. You may need to adjust the webcam angle or turn on a light to make sure his or her face is visible."
+                },
+                {
+                    "text": "The green button down below will start the game. Press the button once you and your child are ready to go!",
+                    "title": "When you're ready"
+                }
+            ],
+            "requireItemConfirmation": true,
+            "recordingInstructionText": ""
+        },
+        "get-your-child": {
+            "kind": "exp-lookit-images-audio",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "id": "storybook-group",
+            "audioTypes": [
+                "mp3",
+                "ogg"
+            ],
+            "autoProceed": false,
+            "doRecording": false,
+            "images": [
+                {
+                    "id": "storybookIllustration",
+                    "src": "exp3_get_your_child.jpeg",
+                    "position": "fill"
+                }
+            ]
+        },
+        "meet-maggie": {
+            "kind": "exp-lookit-video",
+            "video": {
+                "source": "exp3_main_intro",
+                "position": "fill"
+            },
+            "backgroundColor": "white",
+            "autoProceed": false,
+            "requiredDuration": 0,
+            "requireAudioCount": 0,
+            "requireVideoCount": 1,
+            "doRecording": false,
+            "frameOffsetAfterPause": 0,
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "audioTypes": [
+                "ogg",
+                "mp3"
+            ],
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ]
+        },
+        "warmup-1": {
+            "kind": "exp-lookit-video",
+            "video": {
+                "source": "exp3_keil_warmup1_chicken_monkey",
+                "position": "fill",
+                "controls": true
+            },
+            "backgroundColor": "black",
+            "autoProceed": false,
+            "parentTextBlock": {
+                "css": {
+                    "font-size": "17pt",
+                    "padding": "0.5em",
+                    "background-color": "#f8f3bf"
+                },
+                "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+            },
+            "requiredDuration": 0,
+            "requireAudioCount": 0,
+            "requireVideoCount": 1,
+            "doRecording": false,
+            "allowUserPause": false,
+            "showPreviousButton": true,
+            "showReplayButton": true,
+            "frameOffsetAfterPause": 0,
+            "showProgressBar": true,
+            "pauseText": "Game Paused. Press spacebar to resume.",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "audioTypes": [
+                "ogg",
+                "mp3"
+            ],
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ]
+        },
+        "warmup-2": {
+            "kind": "exp-lookit-video",
+            "video": {
+                "source": "exp3_keil_warmup2_sink_toilet",
+                "position": "fill",
+                "controls": true
+            },
+            "backgroundColor": "black",
+            "autoProceed": false,
+            "parentTextBlock": {
+                "css": {
+                    "font-size": "17pt",
+                    "padding": "0.5em",
+                    "background-color": "#f8f3bf"
+                },
+                "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+            },
+            "requiredDuration": 0,
+            "requireAudioCount": 0,
+            "requireVideoCount": 1,
+            "doRecording": false,
+            "showProgressBar": true,
+            "frameOffsetAfterPause": 0,
+            "pauseVideo": "attentiongrabber",
+            "pauseText": "Game Paused. Press spacebar to resume.",
+            "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+            "audioTypes": [
+                "ogg",
+                "mp3"
+            ],
+            "videoTypes": [
+                "webm",
+                "mp4"
+            ]
+        },
+        "main-study-trials": {
+            "kind": "group",
+            "frameList": [
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_lion",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_birdfeeder",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_halfway_reminder",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": true,
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": false,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_bee",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_lamp",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_skunk",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                },
+                {
+                    "kind": "exp-lookit-video",
+                    "video": {
+                        "source": "exp3_keil_plate",
+                        "position": "fill",
+                        "controls": true
+                    },
+                    "backgroundColor": "black",
+                    "autoProceed": false,
+                    "parentTextBlock": {
+                        "css": {
+                            "font-size": "17pt",
+                            "padding": "0.5em",
+                            "background-color": "#f8f3bf"
+                        },
+                        "text": "FOR PARENTS: \nPlease remind your child to answer questions out loud, \nand pick one thing only, for example, chicken or monkey. \nPlease be sure not to influence your child's decision. Thank you!"
+                    },
+                    "requiredDuration": 0,
+                    "requireAudioCount": 0,
+                    "requireVideoCount": 1,
+                    "doRecording": false,
+                    "showProgressBar": true,
+                    "frameOffsetAfterPause": 0,
+                    "unpauseAudio": "return_after_pause",
+                    "pauseVideo": "attentiongrabber",
+                    "baseDir": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment3/exp3/keil/keil_order1",
+                    "audioTypes": [
+                        "ogg",
+                        "mp3"
+                    ],
+                    "videoTypes": [
+                        "webm",
+                        "mp4"
+                    ]
+                }
+            ]
+        }
+    },
+    "sequence": [
+        "video-config",
+        "video-consent",
+        "before-we-get-started",
+        "get-your-child",
+        "positioning-config",
+        "start-recording-with-image",
+        "introduction",
+        "meet-maggie",
+        "warmup-1",
+        "warmup-2",
+        "main-study-trials",
+        "end",
+        "stop-recording-with-video",
+        "exit-survey"
+    ]
+}
