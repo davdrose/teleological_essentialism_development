@@ -1948,33 +1948,33 @@
 ],
 "parameters": {
     "FELD": [
-        "label_only_order2_feld_intro_718",
-        "label_only_order2_feld_question_718",
+        "label_only_order2_feld_intro",
+        "label_only_order2_feld_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another feld?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you! "
     ],
     "WUBBLE": [
-        "label_only_order2_wubble_intro_718",
-        "label_only_order2_wubble_question_718",
+        "label_only_order2_wubble_intro",
+        "label_only_order2_wubble_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another wubble?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you!"
     ],
     "HUDI": [
-        "label_only_order2_hudi_intro_718",
-        "label_only_order2_hudi_question_718",
+        "label_only_order2_hudi_intro",
+        "label_only_order2_hudi_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another hudi?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you! "
     ],
     "MIKO": [
-        "label_only_order2_miko_intro_718",
-        "label_only_order2_miko_question_718",
+        "label_only_order2_miko_intro",
+        "label_only_order2_miko_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another miko?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you! "
     ],
     "VEMO": [
-        "label_only_order2_vemo_intro_718",
-        "label_only_order2_vemo_question_718",
+        "label_only_order2_vemo_intro",
+        "label_only_order2_vemo_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another vemo?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you!"
     ],
     "GERP": [
-        "label_only_order2_gerp_intro_718",
-        "label_only_order2_gerp_question_718",
+        "label_only_order2_gerp_intro",
+        "label_only_order2_gerp_question",
         "For Parents: \n If you need to repeat the question, please say: 'Can you find another gerp?'. \n Please remind your child to say 'top' or 'bottom' out loud. \n Please be sure not to influence your child's decision. Thank you!"
     ]
 }
