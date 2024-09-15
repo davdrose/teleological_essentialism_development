@@ -218,7 +218,7 @@
         "meet-maggie": {
             "kind": "exp-lookit-video",
             "video": {
-                "source": "andy_maggie_workshop",
+                "source": "exp3_main_intro",
                 "position": "fill"
             },
             "backgroundColor": "white",

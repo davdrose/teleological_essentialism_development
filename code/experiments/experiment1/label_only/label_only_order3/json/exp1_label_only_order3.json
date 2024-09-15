@@ -192,7 +192,7 @@
                     "title": "Center your webcam if needed",
                     "text": "<strong>Make sure the webcam you're using is roughly centered</strong> relative to this monitor. This makes it much easier for us to see your video.",
                     "image": {
-                        "src": "https://raw.githubusercontent.com/syzhang6/lookit/master/img/centering.png",
+                        "src": "https://raw.githubusercontent.com/davdrose/teleological_essentialism_development/main/code/experiments/experiment1/label_only/label_only_order3/exp1_centering.jpeg",
                         "alt": "Example images of using centered external webcam on monitor or built-in webcam on laptop."
                     }
                 },
