@@ -6,7 +6,7 @@
 
 In this experiment, we examined how 3 - 4 year old chidlren extend novel words and categorize at the basic level. Children were given three ojects. The first was the standard and given a novel name, such a "Zerp". Then they were shown a shape match and a taxonmic match and asked which one was a Zerp. For example, if shown a drum that is called a "Zerp", and then a same-shaped object, a foot stool, and a different shaped drum, children would be asked which one of these is a Zerp. The trials included artifacts and biological kinds. And there were three differnet conditions, a label only, irrelevant, and purpose condition. In the label only condition, a name was only given to the target item. In the irrelevant condition, the target item was given a label and inductively irrelevant information, such as that it gets wet when it rains.  The taxonomic match was given the same inductively irrelevant information as the target. The shape match was given different irrelevant information. The purpose condition was similar to the irrelevant condition, except that the items were given purposes. 
 
-Experiment 1 was run asynchronously in [Lookit](https://lookit.mit.edu/)
+Experiment 1 was run asynchronously in [Lookit](https://lookit.mit.edu/). To view the experiments in [Lookit](https://childrenhelpingscience.com/), first create a dummy experiment, then click on "Edit Study Design" in the right-hand column. Next, go to "Protocol Configuration" and paste the JSON file for the experiment that you want to view. Click "Save Changes" at the bottom. Once redirected to the study's main page, click "Preview Study."  *** Note: You must have a Lookit researcher account to do this. You can register for a researcher account [here](https://childrenhelpingscience.com/registration/).
 
 ## Experiment 2
 
@@ -29,4 +29,4 @@ Experiment 3 involved giving 5 - 9 year old children classic cases where objects
 
 The materials we used in this experiment were detemrined by first running a two part norming study. In the first part, 4 - 6 year old children were asked what various artifacts and animals are for. We then selected some of the top artifacts and animals whose purpose they agreed on and used these in the second part.  In the second part, we gave 4 - 6 year old children artifact and animal pairs and asked which has some particular purpose. Children were overwhelmingly inclined to select the correct items when asked which of two had some particular purpose. From these, we selected four artifact and four biological kind pairs to be used for the transformations in Experiment 3.
 
-Experiment 3 was run asynchronously in [Lookit](https://lookit.mit.edu/)
+Experiment 3 was run asynchronously in [Lookit](https://lookit.mit.edu/). See the step-by-step instructions under Experiment 1 above to view the experiments.

@@ -621,6 +621,10 @@
                                 "loop": false,
                                 "source": "exp1_thank_you_teddy"
                             },
+                            "audio": {
+                                "source": "exp1_thank_you_half",
+                                "loop": false
+                            },
                             "requiredDuration": 12,
                             "requireAudioCount": 1,
                             "requireVideoCount": 0,
