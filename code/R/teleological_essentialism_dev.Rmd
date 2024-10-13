@@ -14,13 +14,14 @@ output:
 
 ```{r, message=F, warning=FALSE}
 
-library("tidytext")       # for text data
-library("emmeans")        # for comparing models
-library("knitr")          # for knitting  
-library("brms")           # for Bayesian data analysis
-library("janitor")        # for cleaning variable names
-library("patchwork")      # for combining plots
-library("tidyverse")      # for everything else 
+library("tidytext")        # for text data
+library("emmeans")         # for comparing models
+library("marginaleffects") # for marginal effects
+library("knitr")           # for knitting  
+library("brms")            # for Bayesian data analysis
+library("janitor")         # for cleaning variable names
+library("patchwork")       # for combining plots
+library("tidyverse")       # for everything else 
 
 ```
 
@@ -107,14 +108,16 @@ df.exp1 %>%
 ```
 ## STATS
 
-### Percent Taxonomic
+### Percent Taxonomic and Confidence Interval 
 
 ```{r}
 
 
 df.exp1 %>% 
   group_by(condition) %>% 
-  summarise(percent_taxonomic = sprintf("%.2f%%", mean(rating) * 100))
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(rating) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(rating)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(rating)$ymax * 100))
 
 
 ```
@@ -128,7 +131,7 @@ options(contrasts = c("contr.sum","contr.poly"))
 
 df.model = df.exp1 %>% 
   mutate(condition = as_factor(condition),
-         condition= fct_relevel(condition, "purpose"))
+         condition = fct_relevel(condition, "purpose"))
 
 # Check contrast values
  contrasts(df.model$condition)
@@ -148,16 +151,18 @@ fit.brm.basic_level
 
 
 ```
+
 ### Hypothesis test of condition differences and difference from chance
 
 ```{r}
 
 fit.brm.basic_level %>%
-  emmeans(pairwise ~ condition)
-
+  emmeans(pairwise ~ condition,
+          type = "response")
 
 
 ```
+
 
 ### Test of kind
 
@@ -408,14 +413,17 @@ read.csv("../../data/experiment2/exp2.csv") %>%
 
 ## STATS
 
-### Percent Taxonomic
+
+### Percent Taxonomic and Confidence Interval 
 
 ```{r}
 
 
 df.exp2 %>% 
   group_by(condition) %>% 
-  summarise(percent_taxonomic = sprintf("%.2f%%", mean(rating) * 100))
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(rating) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(rating)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(rating)$ymax * 100))
 
 
 ```
@@ -453,10 +461,14 @@ fit.brm.superordinate_level
 ```{r}
 
 fit.brm.superordinate_level %>%
-  emmeans(pairwise ~ condition)
+  emmeans(pairwise ~ condition,
+          type = "response")
 
 
 ```
+
+
+
 ### Test of kind
 
 ```{r}
@@ -1013,7 +1025,12 @@ read_csv("../../data/experiment3/exp3.csv") %>%
 ```{r}
 
 df.artifacts = df.exp3 %>% 
-  filter(kind == "artifacts")
+  filter(kind == "artifacts") %>% 
+  mutate(condition = as_factor(condition),
+         condition = fct_relevel(condition, "purpose"))
+
+# Check contrast values
+ contrasts(df.artifacts$condition)
 
 fit.brm.artifacts = brm(formula = response ~ 1 + condition*age + (1 | participant_number) + (1 | item), 
                      data = df.artifacts,
@@ -1028,13 +1045,50 @@ fit.brm.artifacts = brm(formula = response ~ 1 + condition*age + (1 | participan
 fit.brm.artifacts
 
 ```
+###### Follow-up analysis 
+
+```{r}
+# effect of question 
+fit.brm.artifacts %>% 
+  emmeans(spec = pairwise ~ condition, 
+          type = "response")
+
+# effect of age 
+fit.brm.artifacts %>% 
+  avg_slopes(variable = "age",
+             type = "link")
+  
+# interaction effect 
+fit.brm.artifacts %>% 
+  emtrends(specs = pairwise ~ condition,
+           var = "age")
+```
+###### Percent Original Identity and Confidence Interval 
+
+```{r}
+
+
+df.artifacts %>% 
+  group_by(condition) %>% 
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(response) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(response)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(response)$ymax * 100))
+
+
+```
+
 
 ##### Hypothesis 2
 
 ```{r}
 
 df.biological = df.exp3 %>% 
-  filter(kind == "biological kinds")
+  filter(kind == "biological kinds") %>% 
+  mutate(condition = as_factor(condition),
+         condition = fct_relevel(condition, "purpose"))
+
+# Check contrast values
+ contrasts(df.biological$condition)
 
 fit.brm.biological = brm(formula = response ~ 1 + condition*age + (1 | participant_number) + (1 | item), 
                      data = df.biological,
@@ -1050,13 +1104,50 @@ fit.brm.biological
 
 ```
 
+###### Follow-up analysis 
+
+```{r}
+# effect of question 
+fit.brm.biological %>% 
+  emmeans(spec = pairwise ~ condition, 
+          type = "response")
+
+# effect of age 
+fit.brm.biological %>% 
+  avg_slopes(variable = "age",
+             type = "link")
+  
+# interaction effect 
+fit.brm.biological %>% 
+  emtrends(specs = pairwise ~ condition,
+           var = "age")
+```
+
+###### Percent Original Identity and Confidence Interval 
+
+```{r}
+
+df.biological %>% 
+  group_by(condition) %>% 
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(response) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(response)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(response)$ymax * 100))
+
+
+```
+
 ##### Hypothesis 3
 
 ```{r}
 
 
 df.purpose = df.exp3 %>% 
-  filter(condition == "purpose")
+  filter(condition == "purpose") %>% 
+  mutate(kind = as_factor(kind),
+         kind = fct_relevel(kind, "biological kinds"))
+
+# Check contrast values
+ contrasts(df.purpose$kind)
 
 fit.brm.purpose = brm(formula = response ~ 1 + kind*age + (1 | participant_number) + (1 | item), 
                      data = df.purpose,
@@ -1072,12 +1163,49 @@ fit.brm.purpose
 
 ```
 
+###### Follow-up analysis 
+
+```{r}
+# effect of question 
+fit.brm.purpose %>% 
+  emmeans(spec = pairwise ~ kind, 
+          type = "response")
+
+# effect of age 
+fit.brm.purpose %>% 
+  avg_slopes(variable = "age",
+             type = "link")
+  
+# interaction effect 
+fit.brm.purpose %>% 
+  emtrends(specs = pairwise ~ kind,
+           var = "age")
+```
+
+###### Percent Original Identity and Confidence Interval 
+
+```{r}
+
+df.purpose %>% 
+  group_by(kind) %>% 
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(response) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(response)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(response)$ymax * 100))
+
+
+```
+
 ##### Hypothesis 4
 
 ```{r}
 
 df.control = df.exp3 %>% 
-  filter(condition == "control")
+  filter(condition == "control") %>% 
+  mutate(kind = as_factor(kind),
+         kind = fct_relevel(kind, "biological kinds"))
+
+# Check contrast values
+ contrasts(df.control$kind)
 
 fit.brm.control = brm(formula = response ~ 1 + kind*age + (1 | participant_number) + (1 | item), 
                      data = df.control,
@@ -1092,6 +1220,39 @@ fit.brm.control = brm(formula = response ~ 1 + kind*age + (1 | participant_numbe
 fit.brm.control
 
 ```
+
+###### Follow-up analysis 
+
+```{r}
+# effect of question 
+fit.brm.control %>% 
+  emmeans(spec = pairwise ~ kind, 
+          type = "response")
+
+# effect of age 
+fit.brm.control %>% 
+  avg_slopes(variable = "age",
+             type = "link")
+  
+# interaction effect 
+fit.brm.control %>% 
+  emtrends(specs = pairwise ~ kind,
+           var = "age")
+```
+
+###### Percent Original Identity and Confidence Interval 
+
+```{r}
+
+df.control %>% 
+  group_by(kind) %>% 
+  summarise(percent_taxonomic = sprintf("%.2f%%", mean(response) * 100),
+            ci_lower = sprintf("%.2f%%", mean_cl_normal(response)$ymin * 100),
+            ci_upper = sprintf("%.2f%%", mean_cl_normal(response)$ymax * 100))
+
+
+```
+
 
 ### PLOTS
 
@@ -1156,18 +1317,18 @@ custom_labels = as_labeller(c("control" = "Standard Version", "purpose" = "Purpo
 
 ggplot() +
   geom_hline(yintercept=0.50, linetype="dashed", color = "black") +
-  geom_point(data = df.points,
+  geom_point(data = df.exp3,
              mapping = aes(x = age,
                            y = response,
                            color = kind,
                            fill = kind,
                            shape = kind),
-             alpha = 0.2,
-             size = 2,
+             alpha = 0.18,
+             size = 1,
              position = position_jitterdodge(dodge.width = 0.1,
                                              jitter.width = 0.0,
-                                             jitter.height = 0.0)) +
-  geom_smooth(data = df.plot,
+                                             jitter.height = 0.015)) +
+   geom_smooth(data = df.plot,
               mapping = aes(y = estimate,
                             x = age,
                             ymin = q2_5,
