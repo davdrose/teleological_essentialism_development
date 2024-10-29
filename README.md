@@ -2,7 +2,7 @@
 
 This repository contains the experiments, data, analyses, and figures for the paper "Teleological essentialism in development," by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman.
 
-The preprint can be found [here](https://https://davdrose.github.io/assets/pdf/teleological_essentialism_development.pdf)
+The preprint can be found [here](https://davdrose.github.io/assets/pdf/teleological_essentialism_development.pdf)
 
 __Contents__:
 - [Introduction](#Introduction)
