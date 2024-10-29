@@ -2,7 +2,7 @@
 
 This repository contains the experiments, data, analyses, and figures for the paper "Teleological essentialism in development," by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman.
 
-<!-- The preprint can be found [here](https://UPDATE)-->
+The preprint can be found [here](https://https://davdrose.github.io/assets/pdf/teleological_essentialism_development.pdf)
 
 __Contents__:
 - [Introduction](#Introduction)
@@ -15,7 +15,7 @@ __Contents__:
 <br clear="left" />
 <br clear="right" />
 
-<!-- [Replace with abstract] -->
+Overcoming appearances in categorizing is an important intellectual achievement. But children can’t help but rely on them, as classic shape similarity (e.g., Landau at al, 1988) and perceptual transformation tasks (Keil, 1989) show. Scientific essences – placeholders for what gives something its identity that science fills out – might help (Gelman, 2003) but have a protracted development. We instead propose that children can more readily treat purposes as essences. Across three experiments, with 570 US based children, we find support for this. In contrast to being given only a label or inductively irrelevant properties, children categorize together dissimilar looking, familiar objects based on familiar purposes at the basic (Experiment 1) and superordinate level (Experiment 2)  Children also used an object’s purpose to judge its identity in the face of radical perceptual transformations (Experiment 3). That children can elaborate placeholders with purposes for biological kinds and artifacts suggests a reorientation of essentialism. 
 
 
 
