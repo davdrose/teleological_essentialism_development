@@ -1,6 +1,6 @@
 # Teleological essentialism in development
 
-This repository contains the experiments, data, analyses, and figures for the paper "Teleological essentialism in development" 
+This repository contains the experiments, data, analyses, and figures for the paper "Teleological essentialism in development". 
 <!-- by David Rose, Jadess Lowery, Siying Zhang, and Ellen Markman. -->
 
 <!-- The preprint can be found [here](https://davdrose.github.io/assets/pdf/teleological_essentialism_development.pdf) -->
@@ -16,7 +16,7 @@ __Contents__:
 <br clear="left" />
 <br clear="right" />
 
-Overcoming appearances in categorizing is an important intellectual achievement. But children can’t help but rely on them, as classic shape similarity (e.g., Landau at al, 1988) and perceptual transformation tasks (Keil, 1989) show. Scientific essences – placeholders for what gives something its identity that science fills out – might help (Gelman, 2003) but have a protracted development. We instead propose that children can more readily treat purposes as essences. Across three experiments, with 570 US based children, we find support for this. In contrast to being given only a label or inductively irrelevant properties, children categorize together dissimilar looking, familiar objects based on familiar purposes at the basic (Experiment 1) and superordinate level (Experiment 2)  Children also used an object’s purpose to judge its identity in the face of radical perceptual transformations (Experiment 3). That children can elaborate placeholders with purposes for biological kinds and artifacts suggests a reorientation of essentialism. 
+Overcoming appearances in categorizing is an important intellectual achievement. But children often heavily rely on appearances, as classic shape similarity (e.g., Landau at al, 1988) and perceptual transformation tasks (Keil, 1989) demonstrate. Scientific essences – placeholders for what gives something its identity that science fills out – might help but require a protracted development since scientific elaboration is challenging and rare (Gelman, 2003). We propose that children can more readily treat purposes as essences. Across three experiments, with 570 US based children, we find support for this. Children successfully categorized dissimilar-looking objects together based on shared purposes, both at basic (Experiment 1) and superordinate levels (Experiment 2). Children also used an object’s purpose to judge that it maintained its identity in the face of radical perceptual transformations (Experiment 3). That children can elaborate placeholders with purposes for biological kinds and artifacts suggests a reorientation of essentialism. 
 
 
 
@@ -59,7 +59,7 @@ Overcoming appearances in categorizing is an important intellectual achievement.
   <!-- - `R` contains the analysis scripts that were used to analyze data and generate figures
      (view a rendered file [here](https://davdrose.github.io/teleological_essentialism_development/)). -->
 - `R` contains the analysis scripts that were used to analyze data and generate figures
-     (view a rendered file [here](https://anonymous.4open.science/w/teleological_essentialism_development-E19B/)).
+     (view a rendered file by clicking `website` above).
 - `data/` contains anonymized data from all experiments:
   - `experiment1` contains `exp1.csv` which includes trial and demographic data. 
   - `experiment2` contains `exp2.csv` which includes the trial and demographic data.
