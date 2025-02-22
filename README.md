@@ -41,14 +41,14 @@ Overcoming appearances in categorizing is an important intellectual achievement.
 ```
 
 - `code/` contains all the code for the experiments, analyzing data and generating figures.
-  - `experiments` contains materials and code for each experiment that was run. Pre-registrations for all experiments are linked below.
-    - `experiment1` ([pre-registration](https://osf.io/2gebc/?view_only=c7549494d3174a4aaa5187d7fbc828b5)) was run asynchronously in Lookit.
-	  - `experiment2` ([pre-registration](https://osf.io/uzhw8/?view_only=da1f3cedeb8a4098a5f9bcad7fb0d6a0)) was run synchronously over Zoom. 
-    - `experiment3` includes a two-part norming study and the experiement  
-      - two part norming study:
+- `experiments` contains materials and code for each experiment that was run. Pre-registrations for all experiments are linked below.
+  - `experiment1` ([pre-registration](https://osf.io/2gebc/?view_only=c7549494d3174a4aaa5187d7fbc828b5)) was run asynchronously in Lookit.
+	- `experiment2` ([pre-registration](https://osf.io/uzhw8/?view_only=da1f3cedeb8a4098a5f9bcad7fb0d6a0)) was run synchronously over Zoom. 
+  - `experiment3` includes a two-part norming study and the experiement  
+    - two part norming study:
 	      - `part1` ([pre-registration](https://osf.io/pb4wa/?view_only=be7a8a2936ac4267a65f71b73e4e037a)) and `part2` ([pre-registration](https://osf.io/8v5yk/?view_only=e680dc8aab404690865eb160e38b0480)) were run asynchronously in Lookit.
       - experiment:
-        - `experiment` ([pre-registration](https://osf.io/mrqdx/?view_only=5fd12932202f48349446345c4342ab19)) was run asynchronously in Lookit.
+    - `experiment` ([pre-registration](https://osf.io/mrqdx/?view_only=5fd12932202f48349446345c4342ab19)) was run asynchronously in Lookit.
     <!-- - `experiment1` ([pre-registration](https://osf.io/2gebc)) was run asynchronously in Lookit.
 	  - `experiment2` ([pre-registration](https://osf.io/uzhw8)) was run synchronously over Zoom. 
     - `experiment3` includes a two-part norming study and the experiement  
