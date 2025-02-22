@@ -437,35 +437,48 @@ df.exp2 %>%
 
 ```{r}
 
-# In the paper, we report the results from the Bayesian analysis below so as to be consistent with the reporting of studies 1 and 3 which also used Bayesian analysis. We preregistered that we would conduct a frequentist analysis for study 2, where we would use fit a generalized linear mixed effects model, taking a model stacking approach for the random effect structure. We preregistered that we would first fit a model with random intercepts for participants and then add an addition random intercept for trials, comparing the models to see if the second improved model fit. Then we would perform follow-up analyses with the best fitting model.
+###############################################################################
+#In the paper, we report the results from the Bayesian analysis below 
+#so as to be consistent with the reporting of studies 1 and 3 which also 
+#used Bayesian analysis. 
+#We preregistered that we would conduct a frequentist analysis for study 2,
+#where we would use fit a generalized linear mixed effects model, 
+#taking a model stacking approach for the random effect structure. 
+#We preregistered that we would first fit a model with random intercepts for
+#participants and then add an addition random intercept for trials, 
+#comparing the models to see if the second improved model fit. 
+#Then we would perform follow-up analyses with the best fitting model. 
+#The results from this analysis and the 
+#Bayesian analysis do not qualitatively differ.
+###############################################################################
 
 df.model = df.exp2 %>% 
   mutate(condition = as_factor(condition),
          condition= fct_relevel(condition, "purpose", "label_only", "irrelevant"))
 
-# Step 1: Fit the model with random intercepts for participants only
+# Fit the model with random intercepts for participants only
 fit.glmer1 = glmer(rating ~ condition + (1 | participant),
                     data = df.model,
                     family = binomial,
                     control = glmerControl(optimizer = "bobyqa"))
 
-# Step 2: Fit the model with random intercepts for participants and items
+# Fit the model with random intercepts for participants and items
 fit.glmer2 = glmer(rating ~ condition + (1 | participant) + (1 | item),
                     data = df.model,
                     family = binomial,
                     control = glmerControl(optimizer = "bobyqa"))
 
-# Step 3: Compare the two models
+# Compare the two models
 anova(fit.glmer1, fit.glmer2)
 
-#model2 is not an improvement over model1. We thus perform follow-up analyses with model1
+# model2 is not an improvement over model1. We thus perform follow-up analyses with model1
 
 
 # Pairwise comparisons between conditions
   emmeans(fit.glmer1, pairwise ~ condition) %>%
     summary()
   
-  # Test if rates of taxonomic responding are different from chance in each condition
+# Test if rates of taxonomic responding are different from chance in each condition
 emmeans(fit.glmer1, ~ condition) %>%
     summary(infer = TRUE) %>%
     tidy()
