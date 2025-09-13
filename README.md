@@ -58,8 +58,7 @@ Overcoming appearances in categorizing is an important intellectual achievement.
         - `experiment` ([pre-registration](https://osf.io/mrqdx)) was run asynchronously in Lookit. -->
   <!-- - `R` contains the analysis scripts that were used to analyze data and generate figures
      (view a rendered file [here](https://davdrose.github.io/teleological_essentialism_development/)). -->
-- `R` contains the analysis scripts that were used to analyze data and generate figures
-     (view a rendered file by clicking `website` above).
+- `R` contains the analysis scripts that were used to analyze data and generate figures.
 - `data/` contains anonymized data from all experiments:
   - `experiment1` contains `exp1.csv` which includes trial and demographic data. 
   - `experiment2` contains `exp2.csv` which includes the trial and demographic data.
